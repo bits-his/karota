@@ -1,4 +1,4 @@
-const { create_user, getCreate_user } = require("../controllers/create_user");
+const { create_user, state_and_local_gvt, getCreate_user } = require("../controllers/create_user");
 const config = require("../config/config");
 
 module.exports = (app) => {
@@ -8,8 +8,13 @@ module.exports = (app) => {
     create_user
   );
   app.get(
-    "/api/get_create_users",
+    "/api/getCreate_user",
     //    config.authRequest
     getCreate_user
+  );
+  app.post(
+    "/api/state_and_local_gvt",
+    //    config.authRequest
+    state_and_local_gvt
   );
 };
