@@ -102,7 +102,7 @@ const getCreate_user = (req, res) => {
     phone_no3 = null,
     name_of_company = null,
     qrcode = null,
-  } = req.body;
+  } = req.query;
   const { query_type = "create" } = req.query;
   db.sequelize
     .query(
