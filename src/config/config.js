@@ -1,10 +1,10 @@
 var config = module.exports;
 
 const userRoles = config.userRoles = {
-    guest: 1,       
-    user: 2,        
-    admin: 4,      
-    superAdmin: 8   
+    guest: 'guest',       
+    user: 'user',        
+    admin: 'admin',      
+    superAdmin: 'super admin'   
 }
 
 config.accessLevels = {

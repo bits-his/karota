@@ -13,12 +13,14 @@ import validateLoginForm from '../validation/login';
 const create = (req, res) => {
   const { errors, isValid } = validateRegisterForm(req.body);
   let { 
-    firstname, 
-    lastname, 
+    name, 
     username, 
-    role,
-    email, 
+    account_type,
+    email,
+    phone_no,
     password,
+    status,
+    role,
   } = req.body;
 
   // check validation
@@ -31,12 +33,14 @@ const create = (req, res) => {
       return res.status(400).json({ email: 'Email already exists!' });
     } else {
       let newUser = { 
-        firstname, 
-        lastname, 
-        username, 
-        role,
+        name, 
+        username,
+        account_type,
         email, 
-        password, 
+        phone_no,
+        password,
+        status,
+        role,
       };
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {

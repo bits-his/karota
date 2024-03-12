@@ -1,12 +1,17 @@
+import { STRING } from "sequelize";
+
 export default (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
     {
-      firstname: DataTypes.STRING,
-      lastname: DataTypes.STRING,
+   
+      name: DataTypes.STRING,
       username: DataTypes.STRING,
+      account_type: DataTypes.STRING,
       email: DataTypes.STRING,
+      phone_no: DataTypes.STRING,
       password: DataTypes.STRING,
+      status: DataTypes.STRING,
       role: DataTypes.STRING,
     },
     {}

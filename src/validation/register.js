@@ -4,27 +4,29 @@ import isEmpty from './isEmpty';
 function validateRegisterForm(data) {
   let errors = {};
 
-  data.firstname = !isEmpty(data.firstname) ? data.firstname : '';
-  data.lastname = !isEmpty(data.lastname) ? data.lastname : '';
-  data.role = !isEmpty(data.role) ? data.role : '';
+  data.name = !isEmpty(data.name) ? data.name : '';
   data.username = !isEmpty(data.username) ? data.username : '';
+  data.account_type = !isEmpty(data.account_type) ? data.account_type : '';
   data.email = !isEmpty(data.email) ? data.email : '';
+  data.phone_no = !isEmpty(data.phone_no) ? data.phone_no : '';
   data.password = !isEmpty(data.password) ? data.password : '';
+  data.status = !isEmpty(data.status) ? data.status : '';
+  data.role = !isEmpty(data.role) ? data.role : '';
 
-  if (!Validator.isLength(data.firstname, { min: 2, max: 30 })) {
-    errors.firstname = 'First Name must be between 2 and 30 character long';
+  if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
+    errors.name = 'Name must be between 2 and 30 character long';
   }
 
-  if (!Validator.isLength(data.lastname, { min: 2, max: 30 })) {
-    errors.lastname = 'Last Name must be between 2 and 30 character long';
+  if (!Validator.isLength(data.username, { min: 2, max: 30 })) {
+    errors.username = 'Last Name must be between 2 and 30 character long';
   }
 
-  if (Validator.isEmpty(data.firstname)) {
-    errors.firstname = 'First Name field is required';
+  if (Validator.isEmpty(data.name)) {
+    errors.name = 'First Name field is required';
   }
 
-  if (Validator.isEmpty(data.lastname)) {
-    errors.lastname = 'Last Name field is required';
+  if (Validator.isEmpty(data.username)) {
+    errors.usernamename = 'Last Name field is required';
   }
 
   if (Validator.isEmpty(data.role)) {

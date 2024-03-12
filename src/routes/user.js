@@ -8,9 +8,7 @@ import { create, login, findAllUsers,
 module.exports = (app) => {
   // create a new user
   app.post(
-    '/api/users/create',
-    passport.authenticate('jwt', { session: false }),
-    allowOnly(config.accessLevels.admin, create)
+    '/api/users/create', create
   );
 
   // user login
@@ -31,7 +29,7 @@ module.exports = (app) => {
     passport.authenticate('jwt', {
       session: false,
     }),
-    allowOnly(config.accessLevels.admin, findById)
+   findById
   );
 
   // update a user with id
