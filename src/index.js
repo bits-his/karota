@@ -38,6 +38,8 @@ require('./routes/user.js')(app);
 require('./routes/create_user.js')(app);
 require('./routes/incedent.js')(app);
 require('./routes/payment.js')(app);
+require('./routes/vendor.js')(app);
+
 
 //create a server
 var server = app.listen(port, function() {
