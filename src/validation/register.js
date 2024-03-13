@@ -1,5 +1,5 @@
-import Validator from 'validator';
-import isEmpty from './isEmpty';
+const Validator = require('validator');
+const isEmpty = require('./isEmpty');
 
 function validateRegisterForm(data) {
   let errors = {};

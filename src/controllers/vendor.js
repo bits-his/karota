@@ -1,5 +1,5 @@
-import bcrypt from 'bcryptjs';
-import db from '../models';
+const bcrypt = require ('bcryptjs');
+const db = require ('../models');
 
 export const createVendor = async (req, res) => {
   const {

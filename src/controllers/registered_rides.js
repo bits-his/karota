@@ -1,4 +1,4 @@
-import db from "../models";
+const db = require ("../models");
 
 const registered_rides = (req, res) => {
   // const {  } = req.body;

@@ -1,5 +1,5 @@
-// import bcrypt from 'bcryptjs';
-import db from '../models';
+// const bcrypt from 'bcryptjs';
+const db = require ('../models');
 
 export const registerVehicle = async (req, res) => {
   const {

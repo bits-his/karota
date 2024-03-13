@@ -1,6 +1,6 @@
-import passport from 'passport';
-import config from '../config/config';
-import { allowOnly } from '../services/routesHelper';
+const passport = reqiire ('passport');
+const config = reqiire ('../config/config');
+const { allowOnly } = reqiire ('../services/routesHelper');
 const { getAllDriver, registerDriver } = require("../controllers/driver");
 
 module.exports = (app) => {

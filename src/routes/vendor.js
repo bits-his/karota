@@ -1,6 +1,6 @@
-import passport from 'passport';
-import config from '../config/config';
-import { allowOnly } from '../services/routesHelper';
+const passport = require ('passport');
+const config = require ('../config/config');
+const { allowOnly } = require ('../services/routesHelper');
 const { createVendor, getAllVendors, getSingleVendor } = require("../controllers/vendor");
 
 module.exports = (app) => {

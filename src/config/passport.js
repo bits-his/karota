@@ -1,5 +1,6 @@
-import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
-import models from '../models'
+const {  ExtractJwt } = require ('passport-jwt')
+const JwtStrategy  = require ('passport-jwt').Strategy
+const models = require ('../models')
 
 const Users = models.User;
 

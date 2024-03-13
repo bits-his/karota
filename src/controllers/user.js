@@ -1,13 +1,13 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import passport from 'passport';
+const bcrypt = require ('bcryptjs');
+const jwt = require ('jsonwebtoken');
+const passport = require ('passport');
 
-import db from '../models';
+const db = require ('../models');
 const User = db.User;
 
 // load input validation
-import validateRegisterForm from '../validation/register';
-import validateLoginForm from '../validation/login';
+const validateRegisterForm = require ('../validation/register');
+const validateLoginForm = require ('../validation/login');
 
 // create user
 const create = (req, res) => {

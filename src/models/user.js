@@ -1,4 +1,4 @@
-import { STRING } from "sequelize";
+const { STRING } = require ("sequelize");
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define(

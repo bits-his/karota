@@ -1,4 +1,4 @@
-import db from "../models";
+const db = require ("../models");
 
 export const create_incident = (req, res) => {
     const {

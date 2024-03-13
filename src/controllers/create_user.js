@@ -1,4 +1,4 @@
-import db from "../models";
+const db = require ("../models");
 
 const create_user = (req, res) => {
   // const {  } = req.body;

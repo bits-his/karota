@@ -1,8 +1,8 @@
-import express from 'express';
-import passport from 'passport';
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import models from './models'
+const express = require ('express');
+const passport = require ('passport');
+const bodyParser = require ('body-parser');
+const cors = require ('cors');
+const models = require ('./models')
 
 const app = express();
 
