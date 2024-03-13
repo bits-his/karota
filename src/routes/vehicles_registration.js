@@ -1,17 +1,17 @@
 import passport from 'passport';
 import config from '../config/config';
 import { allowOnly } from '../services/routesHelper';
-const { createVendor, getAllVendors, getSingleVendor } = require("../controllers/vendor");
+const { registerVehicle, getAllVehicle } = require("../controllers/vehicles_registration");
 
 module.exports = (app) => {
   // create a new vendor
   app.post(
-    '/api/vendors/create',
-    createVendor
+    '/api/registervehicle/create',
+    registerVehicle
   );
   // select all vendors from the database.
-  app.get('/api/vendors/get', 
- getAllVendors);
+  app.get('/api/registervehicle/get', 
+  getAllVehicle);
 
     
    //apiName Get Vendor by ID  

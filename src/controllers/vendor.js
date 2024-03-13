@@ -62,3 +62,52 @@ export const createVendor = async (req, res) => {
     res.status(500).json({ success: false, error: 'Failed to create vendor' });
   }
 };
+
+//  @ Get all vendors
+//  @route GET /api/vendors 
+export const getAllVendors = async (req, res) => {
+  db.sequelize
+    .query(`select * from vendors`)
+    .then((resp) => res.status(500).json({ success: true, resp }))
+    .catch((err) => res.status(200).json({ success: false }));
+
+};
+
+//@   Get single vendor by id
+//@route  GET /api/vendors/:id
+// const findById = (req, res) => {
+//   const id = req.params.userId;
+
+//   User.findAll({ where: { id } })
+//     .then(user => {
+//       if(!user.length) {
+//         return res.json({ msg: 'user not found'})
+//       }
+//       res.json({ user })
+//     })
+//     .catch(err => res.status(500).json({ err }));
+// };
+
+
+
+
+
+// export const getSingleVendor = async (req, res) => {
+//   const { id } = req.params;
+
+//   // Validate ID format
+//   if (!ValidateIdFormat.test(id)) return res.status(400).json({ success: false, error: "Invalid ID Format" });
+//   if (!ValidateIdFormat.validate(id)) return res.status(400).json({ success: false, error: "Invalid ID Format" });
+//   if (!ValidateIdFormat.validate(id)) {
+//     return res.status(400).json({
+//       success: false,
+//       error: "Invalid ID Format",
+//     });
+// }
+// }
+// export const fetchVendor = (req, res) => {
+//     db.sequelize
+//       .query(`select * from vendors`)
+//       .then((resp) => res.status(500).json({ success: true, resp }))
+//       .catch((err) => res.status(200).json({ success: false }));
+//   };
