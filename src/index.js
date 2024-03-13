@@ -1,8 +1,15 @@
+
 const express = require ('express');
 const passport = require ('passport');
 const bodyParser = require ('body-parser');
 const cors = require ('cors');
 const models = require ('./models')
+// const express = require('express');
+// const passport = require('passport');
+// const bodyParser = require('body-parser');
+// const cors = require('cors');
+// const models = require('./models')
+
 
 const app = express();
 
@@ -47,13 +54,13 @@ require('./routes/agent.js')(app);
 
 
 // any routes not specified get sent here
-app.all("/*", function(req, res){
-    res.status(404).send("This route does not exist");
+app.all("/*", function (req, res) {
+  res.status(404).send("This route does not exist");
 });
 
 
 //create a server
-var server = app.listen(port, function() {
+var server = app.listen(port, function () {
   var host = server.address().address;
   var port = server.address().port;
 
