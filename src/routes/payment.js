@@ -4,14 +4,14 @@ const config = require("../config/config");
 
 module.exports = (app) => {
   app.post(
-    "/api/payments",
+    "/payments",
     //    config.authRequest
     payment
   );
   app.get(
-    "/api/getpayment",
+    "/getpayment",
     //    config.authRequest
     getPayment
   );
-  
+
 };

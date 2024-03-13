@@ -66,7 +66,7 @@ module.exports.registerVehicle = async (req, res) => {
 };
 
 //  @ Get all vendors
-//  @route GET /api/vendors 
+//  @route GET /vendors 
 module.exports.getAllVehicle = async (req, res) => {
   db.sequelize
     .query(`select * from vehicle_registration`)
@@ -76,7 +76,7 @@ module.exports.getAllVehicle = async (req, res) => {
 };
 
 //@   Get single vendor by id
-//@route  GET /api/vendors/:id
+//@route  GET /vendors/:id
 // const findById = (req, res) => {
 //   const id = req.params.userId;
 

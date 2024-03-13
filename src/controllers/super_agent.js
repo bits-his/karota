@@ -50,7 +50,7 @@ module.exports.superAgent = async (req, res) => {
 };
 
 //  @ Get all superagent
-//  @route GET /api/superagent
+//  @route GET /superagent
 module.exports.getAllSuperAgent = async (req, res) => {
   db.sequelize
     .query(`select * from super_agent`)
