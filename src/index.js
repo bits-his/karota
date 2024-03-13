@@ -39,6 +39,17 @@ require('./routes/create_user.js')(app);
 require('./routes/incedent.js')(app);
 require('./routes/payment.js')(app);
 require('./routes/vendor.js')(app);
+require('./routes/vehicles_registration.js')(app);
+require('./routes/driver.js')(app);
+require('./routes/super_agent.js')(app);
+require('./routes/agent.js')(app);
+
+
+
+// any routes not specified get sent here
+app.all("/*", function(req, res){
+    res.status(404).send("This route does not exist");
+});
 
 
 //create a server
