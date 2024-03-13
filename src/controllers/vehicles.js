@@ -1,6 +1,6 @@
 import db from '../models';
 
 
-export const vehicleReg = (req, res) => {
+module.exports.vehicleReg = (req, res) => {
     db.sequelize.query(`CALL vehicle_registration()`)
 }

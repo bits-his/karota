@@ -1,8 +1,8 @@
 'use strict';
 
-const fs  = require ('fs');
-const path  = require ('path');
-const Sequelize  = require ('sequelize');
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
 require('dotenv').config();
 
 const basename = path.basename(__filename);
@@ -49,4 +49,4 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-export default db;
+module.exports = db;

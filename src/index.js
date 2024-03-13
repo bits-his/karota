@@ -1,9 +1,9 @@
 
-const express = require ('express');
-const passport = require ('passport');
-const bodyParser = require ('body-parser');
-const cors = require ('cors');
-const models = require ('./models')
+const express = require('express');
+const passport = require('passport');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const models = require('./models')
 // const express = require('express');
 // const passport = require('passport');
 // const bodyParser = require('body-parser');

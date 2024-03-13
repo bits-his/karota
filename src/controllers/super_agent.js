@@ -1,7 +1,7 @@
 // const bcrypt = require ('bcryptjs';)
-const db = require ("../models");
+const db = require("../models");
 
-export const superAgent = async (req, res) => {
+module.exports.superAgent = async (req, res) => {
   const {
     query_type = "insert",
     id = "",
@@ -51,7 +51,7 @@ export const superAgent = async (req, res) => {
 
 //  @ Get all superagent
 //  @route GET /api/superagent
-export const getAllSuperAgent = async (req, res) => {
+module.exports.getAllSuperAgent = async (req, res) => {
   db.sequelize
     .query(`select * from super_agent`)
     .then((resp) => res.status(500).json({ success: true, resp }))

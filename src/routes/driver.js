@@ -1,6 +1,6 @@
-const passport = reqiire ('passport');
-const config = reqiire ('../config/config');
-const { allowOnly } = reqiire ('../services/routesHelper');
+const passport = require('passport');
+const config = require('../config/config');
+const { allowOnly } = require('../services/routesHelper');
 const { getAllDriver, registerDriver } = require("../controllers/driver");
 
 module.exports = (app) => {
@@ -10,15 +10,15 @@ module.exports = (app) => {
     registerDriver
   );
   // select all vendors from the database.
-  app.get('/api/registerdriver/get', 
-  getAllDriver);
+  app.get('/api/registerdriver/get',
+    getAllDriver);
 
-    
-   //apiName Get Vendor by ID  
+
+  //apiName Get Vendor by ID  
   //  app.get(
   //   '/api/vendors/:id',
   //   getSingleVendor);
-    
+
 
   // app.param('id', getSingleVendor);
   // // return information about one specific vendor  using its id

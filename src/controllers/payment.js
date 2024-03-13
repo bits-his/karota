@@ -1,6 +1,6 @@
-const db = require ("../models");
+const db = require("../models");
 
-const payment = (req, res) => {
+module.exports.payment = (req, res) => {
   // const {  } = req.body;
   const {
     id = null,
@@ -9,7 +9,7 @@ const payment = (req, res) => {
     card_number = null,
     cvv = null,
     expiry_date = null,
-  
+
   } = req.body;
   const { query_type = "create" } = req.query;
   db.sequelize
@@ -34,7 +34,7 @@ const payment = (req, res) => {
     });
 };
 
-const getPayment = (req, res) => {
+module.exports.getPayment = (req, res) => {
   // const {  } = req.body;
   const {
     id = null,
@@ -43,7 +43,7 @@ const getPayment = (req, res) => {
     card_number = null,
     cvv = null,
     expiry_date = null,
-  
+
   } = req.query;
   const { query_type = "create" } = req.query;
   db.sequelize
@@ -68,5 +68,3 @@ const getPayment = (req, res) => {
     });
 
 };
-
-export { payment, getPayment };

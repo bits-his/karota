@@ -1,7 +1,7 @@
 // const bcrypt = require ('bcryptjs';)
-const db = require ('../models');
+const db = require('../models');
 
-export const createAgent = async (req, res) => {
+module.exports.createAgent = async (req, res) => {
   const {
     query_type = 'insert',
     id = '',
@@ -27,8 +27,8 @@ export const createAgent = async (req, res) => {
         :lga)`,
       {
         replacements: {
-            query_type,
-            id,
+          query_type,
+          id,
           name,
           phone_no,
           email,
@@ -49,7 +49,7 @@ export const createAgent = async (req, res) => {
 
 //  @ Get all superagent
 //  @route GET /api/superagent 
-export const getAllAgent = async (req, res) => {
+module.exports.getAllAgent = async (req, res) => {
   db.sequelize
     .query(`select * from agent`)
     .then((resp) => res.status(500).json({ success: true, resp }))

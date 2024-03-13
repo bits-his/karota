@@ -1,7 +1,7 @@
-const bcrypt = require ('bcryptjs');
-const db = require ('../models');
+const bcrypt = require('bcryptjs');
+const db = require('../models');
 
-export const createVendor = async (req, res) => {
+module.exports.createVendor = async (req, res) => {
   const {
     query_type = 'insert',
     id = null,
@@ -65,7 +65,7 @@ export const createVendor = async (req, res) => {
 
 //  @ Get all vendors
 //  @route GET /api/vendors 
-export const getAllVendors = async (req, res) => {
+module.exports.getAllVendors = async (req, res) => {
   db.sequelize
     .query(`select * from vendors`)
     .then((resp) => res.status(500).json({ success: true, resp }))

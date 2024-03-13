@@ -1,23 +1,23 @@
 // const bcrypt from 'bcryptjs';
-const db = require ('../models');
+const db = require('../models');
 
-export const registerVehicle = async (req, res) => {
+module.exports.registerVehicle = async (req, res) => {
   const {
     query_type = 'insert',
     id = '',
     owners_name,
-            owners_address,
-            owners_phone,
-            owners_email,
-            owners_state,
-            owners_lga,
-            owners_dob,
-            vehicle_id,
-            owner_id,
-            engine_no,
-             plate_no,
-             purchased_date,
-             registered_lg 
+    owners_address,
+    owners_phone,
+    owners_email,
+    owners_state,
+    owners_lga,
+    owners_dob,
+    vehicle_id,
+    owner_id,
+    engine_no,
+    plate_no,
+    purchased_date,
+    registered_lg
   } = req.body;
 
   try {
@@ -51,9 +51,9 @@ export const registerVehicle = async (req, res) => {
           vehicle_id,
           owner_id,
           engine_no,
-           plate_no,
-           purchased_date,
-           registered_lg 
+          plate_no,
+          purchased_date,
+          registered_lg
         }
       }
     );
@@ -67,7 +67,7 @@ export const registerVehicle = async (req, res) => {
 
 //  @ Get all vendors
 //  @route GET /api/vendors 
-export const getAllVehicle = async (req, res) => {
+module.exports.getAllVehicle = async (req, res) => {
   db.sequelize
     .query(`select * from vehicle_registration`)
     .then((resp) => res.status(500).json({ success: true, resp }))

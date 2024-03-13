@@ -1,6 +1,6 @@
-const db = require ("../models");
+const db = require("../models");
 
-const create_user = (req, res) => {
+module.exports.create_user = (req, res) => {
   // const {  } = req.body;
   const {
     id = null,
@@ -73,7 +73,7 @@ const create_user = (req, res) => {
     });
 };
 
-const getCreate_user = (req, res) => {
+module.exports.getCreate_user = (req, res) => {
   // const {  } = req.body;
   const {
     id = null,
@@ -146,7 +146,7 @@ const getCreate_user = (req, res) => {
     });
 };
 
-const state_and_local_gvt = (req, res) => {
+module.exports.state_and_local_gvt = (req, res) => {
   // const {  } = req.body;
   const { type = null, state = null, local_gvt = null } = req.body;
   const { query_type = "insert" } = req.query;
@@ -165,5 +165,3 @@ const state_and_local_gvt = (req, res) => {
       res.status(500).json({ success: false });
     });
 };
-
-export { create_user, state_and_local_gvt, getCreate_user };

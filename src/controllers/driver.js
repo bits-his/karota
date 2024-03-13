@@ -1,7 +1,7 @@
 // const bcrypt = require ('bcryptjs';)
-const db = require ('../models');
+const db = require('../models');
 
-export const registerDriver = async (req, res) => {
+module.exports.registerDriver = async (req, res) => {
   const {
     query_type = 'insert',
     driver_id = '',
@@ -36,15 +36,15 @@ export const registerDriver = async (req, res) => {
           query_type,
           driver_id,
           name,
-            nin,
-            phone,
-            email,
-            address,
-            dob,
-            state,
-            lga,
-           	next_of_kin,
-            vehicle_id 
+          nin,
+          phone,
+          email,
+          address,
+          dob,
+          state,
+          lga,
+          next_of_kin,
+          vehicle_id
         }
       }
     );
@@ -58,7 +58,7 @@ export const registerDriver = async (req, res) => {
 
 //  @ Get all vendors
 //  @route GET /api/vendors 
-export const getAllDriver = async (req, res) => {
+module.exports.getAllDriver = async (req, res) => {
   db.sequelize
     .query(`select * from drivers`)
     .then((resp) => res.status(500).json({ success: true, resp }))

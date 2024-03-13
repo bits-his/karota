@@ -1,10 +1,9 @@
-const { STRING } = require ("sequelize");
 
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
     {
-   
+
       name: DataTypes.STRING,
       username: DataTypes.STRING,
       account_type: DataTypes.STRING,
@@ -17,7 +16,7 @@ export default (sequelize, DataTypes) => {
     {}
   );
 
-  User.associate = function(models) {
+  User.associate = function (models) {
     // associations go here
   };
 
