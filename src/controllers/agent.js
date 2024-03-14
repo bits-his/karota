@@ -5,13 +5,13 @@ module.exports.createAgent = async (req, res) => {
   const {
     query_type = 'insert',
     id = null,
-    name= null,
-    phone_no= null,
-    email= null,
-    address= null,
-    super_agent= null,
-    state= null,
-    lga=null,
+    name = null,
+    phone_no = null,
+    email = null,
+    address = null,
+    super_agent = null,
+    state = null,
+    lga = null,
   } = req.body;
 
   try {
@@ -53,18 +53,18 @@ module.exports.fetchAgent = async (req, res) => {
   const {
     query_type = 'select',
     id = null,
-    name= null,
-    phone_no= null,
-    email= null,
-    address= null,
-    super_agent= null,
-    state= null,
-    lga=null,
+    name = null,
+    phone_no = null,
+    email = null,
+    address = null,
+    super_agent = null,
+    state = null,
+    lga = null,
   } = req.query;
 
   try {
     const resp = await db.sequelize.query(
-      `CALL agent(:query_type, 
+      `CALL agents(:query_type, 
         :id, 
         :name,
         :phone_no,
