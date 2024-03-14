@@ -59,4 +59,4 @@ function validateRegisterForm(data) {
   };
 };
 
-export default validateRegisterForm;
+module.exports = validateRegisterForm;

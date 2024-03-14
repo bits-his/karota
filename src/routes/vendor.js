@@ -1,24 +1,22 @@
-const passport = require ('passport');
-const config = require ('../config/config');
-const { allowOnly } = require ('../services/routesHelper');
-const { createVendor, getAllVendors, getSingleVendor } = require("../controllers/vendor");
+
+const { createVendor, getAllVendors } = require("../controllers/vendor");
 
 module.exports = (app) => {
   // create a new vendor
   app.post(
-    '/api/vendors/create',
+    '/vendors/create',
     createVendor
   );
   // select all vendors from the database.
-  app.get('/api/vendors/get', 
- getAllVendors);
+  app.get('/vendors',
+    getAllVendors);
 
-    
-   //apiName Get Vendor by ID  
+
+  //apiName Get Vendor by ID  
   //  app.get(
   //   '/api/vendors/:id',
   //   getSingleVendor);
-    
+
 
   // app.param('id', getSingleVendor);
   // // return information about one specific vendor  using its id
