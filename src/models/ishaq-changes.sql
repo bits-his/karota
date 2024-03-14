@@ -58,3 +58,53 @@ BEGIN
     END IF;
 END$$
 DELIMITER ;
+
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `vehicles_registration`$$
+CREATE PROCEDURE `vehicles_registration`(IN `_query_type` VARCHAR(10), IN `_id` INT, IN `_owners_name` VARCHAR(50), IN `_owners_address` VARCHAR(50), IN `_owners_phone` VARCHAR(20), IN `_owners_email` VARCHAR(50), IN `_owners_state` VARCHAR(50), IN `_owners_lga` VARCHAR(50), IN `_owners_dob` DATE, IN `_vehicle_id` INT, IN `_owner_id` INT, IN `_engine_no` VARCHAR(50), IN `_plate_no` VARCHAR(500), IN `_purchased_date` DATE, IN `_registered_lg` VARCHAR(50))
+BEGIN
+    IF _query_type = 'insert' THEN
+        INSERT INTO `vehicle_owner` (
+            owners_name,
+            owners_address,
+            owners_phone,
+            owners_email,
+            owners_state,
+            owners_lga,
+            owners_dob
+        ) VALUES (
+            _owners_name,
+            _owners_address,
+            _owners_phone,
+            _owners_email,
+            _owners_state,
+            _owners_lga,
+            _owners_dob
+        );
+         INSERT INTO `vehicle_registration` (
+           owner_id,
+           engine_no,
+            plate_no,
+            purchased_date,
+            registered_lg 
+        ) VALUES (
+           LAST_INSERT_ID(),
+            _engine_no,
+            _plate_no,
+            _purchased_date,
+            _registered_lg
+           
+        );
+        
+     ELSEIF _query_type ='select' THEN
+        SELECT * FROM `vehicle_registration`
+        WHERE id=_id;
+    
+    ELSEIF _query_type ='delete' THEN
+        DELETE FROM `vehicle_owner`
+        WHERE id = _id;
+    END IF;
+END$$
+DELIMITER ;
