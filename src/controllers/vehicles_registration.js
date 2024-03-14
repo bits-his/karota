@@ -67,7 +67,7 @@ module.exports.registerVehicle = async (req, res) => {
 
 //  @ Get all vendors
 //  @route GET /vendors 
-module.exports.getAllVehicle = async (req, res) => {
+module.exports.getAllVehicles = async (req, res) => {
   db.sequelize
     .query(`select * from vehicle_registration`)
     .then((resp) => res.status(200).json({ success: true, data: resp[0] }))
