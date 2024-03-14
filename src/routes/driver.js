@@ -14,7 +14,7 @@ module.exports = (app) => {
     getAllDriver);
 
 
-  /Name Get Vendor by ID  
+  // /Name Get Vendor by ID  
   //  app.get(
   //   '/vendors/:id',
   //   getSingleVendor);

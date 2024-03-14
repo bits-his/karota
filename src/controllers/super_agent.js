@@ -4,14 +4,16 @@ const db = require("../models");
 module.exports.superAgent = async (req, res) => {
   const {
     query_type = "insert",
-    id = "",
-    name,
-    phone,
-    email,
-    address,
-    vendor,
-    state,
-    lga,
+    id = null,
+    name = null,
+    phone = null,
+    email = null,
+    address = null,
+    vendor = null,
+    state = null,
+    lga = null,
+    nin = null,
+    dob = null
   } = req.body;
 
   try {
@@ -19,12 +21,14 @@ module.exports.superAgent = async (req, res) => {
       `CALL super_agent(:query_type, 
         :id, 
         :name,
-            :phone,
-            :email,
-            :address,
-            :vendor,
-            :state,
-            :lga)`,
+        :phone,
+        :email,
+        :address,
+        :vendor,
+        :state,
+        :lga,
+        :nin,
+        :dob)`,
       {
         replacements: {
           query_type,
@@ -36,6 +40,8 @@ module.exports.superAgent = async (req, res) => {
           vendor,
           state,
           lga,
+          nin,
+          dob
         },
       }
     );

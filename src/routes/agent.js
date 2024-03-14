@@ -9,8 +9,4 @@ module.exports = (app) => {
   // select all agent from the database.
   app.get('/getallagent/get',
     getAllAgent);
-
-
-
-
 };

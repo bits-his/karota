@@ -10,11 +10,11 @@ module.exports = (app) => {
     registerVehicle
   );
   // select all vendors from the database.
-  app.get('/registervehicle/get',
+  app.get('/vehicles',
     getAllVehicle);
 
 
-  /Name Get Vendor by ID  
+  // /Name Get Vendor by ID  
   //  app.get(
   //   '/vendors/:id',
   //   getSingleVendor);

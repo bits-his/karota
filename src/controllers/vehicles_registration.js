@@ -70,8 +70,8 @@ module.exports.registerVehicle = async (req, res) => {
 module.exports.getAllVehicle = async (req, res) => {
   db.sequelize
     .query(`select * from vehicle_registration`)
-    .then((resp) => res.status(500).json({ success: true, resp }))
-    .catch((err) => res.status(200).json({ success: false }));
+    .then((resp) => res.status(200).json({ success: true, data: resp[0] }))
+    .catch((err) => res.status(500).json({ success: false }));
 
 };
 
