@@ -144,6 +144,7 @@ CREATE PROCEDURE `vehicles_registration`(
     IN `_engine_no` VARCHAR(50), 
     IN `_plate_no` VARCHAR(50), 
     IN `_purchased_date` DATE, 
+    IN _state_registered VARCHAR(50), 
     IN `_registered_lg` VARCHAR(50), 
     IN _driver_name VARCHAR(50),
     IN _driver_nin VARCHAR(50),
@@ -202,12 +203,14 @@ BEGIN
     engine_no,
     plate_no,
     purchased_date,
+    state_registered,
     registered_lg
     )VALUES (
         _last_owner_id,
         _engine_no,
         _plate_no,
         _purchased_date,
+        _state_registered,
         _registered_lg
     );   
     SET _last_vehicle_id = LAST_INSERT_ID();
