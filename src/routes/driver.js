@@ -6,11 +6,11 @@ const { getAllDriver, registerDriver } = require("../controllers/driver");
 module.exports = (app) => {
   // create a new vendor
   app.post(
-    '/registerdriver/create',
+    '/registerdriver',
     registerDriver
   );
-  // select all vendors from the database.
-  app.get('/registerdriver/get',
+  // select all drivers from the database.
+  app.get('/driver',
     getAllDriver);
 
 

@@ -1,7 +1,7 @@
 const passport = require('passport');
 const config = require('../config/config');
 const { allowOnly } = require('../services/routesHelper');
-const { registerVehicle, getAllVehicles } = require("../controllers/vehicles_registration");
+const { registerVehicle, getRegVehicles } = require("../controllers/vehicles_registration");
 
 module.exports = (app) => {
   // create a new vendor
@@ -11,23 +11,7 @@ module.exports = (app) => {
   );
   // select all vendors from the database.
   app.get('/vehicles',
-    getAllVehicles);
+    getRegVehicles);
 
 
-  // /Name Get Vendor by ID  
-  //  app.get(
-  //   '/vendors/:id',
-  //   getSingleVendor);
-
-
-  // app.param('id', getSingleVendor);
-  // // return information about one specific vendor  using its id
-  // app.route("/vendors/:id").get(allowOnly(config.accessLevels.admin, getSingleVendor));
-
-
-
-  // // fetch all vendors
-  // app.get("/vendors/fetch", 
-  // fetchVendor
-  // );
 };

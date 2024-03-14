@@ -4,17 +4,17 @@ const db = require('../models');
 module.exports.registerDriver = async (req, res) => {
   const {
     query_type = 'insert',
-    driver_id = '',
-    name,
-    nin,
-    phone,
-    email,
-    address,
-    dob,
-    state,
-    lga,
-    next_of_kin,
-    vehicle_id
+    driver_id =null,
+    name=null,
+    nin=null,
+    phone=null,
+    email=null,
+    address=null,
+    dob=null,
+    state=null,
+    lga=null,
+    next_of_kin=null,
+    vehicle_id=null,
   } = req.body;
 
   try {
@@ -59,26 +59,61 @@ module.exports.registerDriver = async (req, res) => {
 //  @ Get all vendors
 //  @route GET /vendors 
 module.exports.getAllDriver = async (req, res) => {
-  db.sequelize
-    .query(`select * from drivers`)
-    .then((resp) => res.status(500).json({ success: true, resp }))
-    .catch((err) => res.status(200).json({ success: false }));
+  const {
+    query_type = 'select',
+    driver_id =null,
+    name=null,
+    nin=null,
+    phone=null,
+    email=null,
+    address=null,
+    dob=null,
+    state=null,
+    lga=null,
+    next_of_kin=null,
+    vehicle_id=null,
+  } = req.query;
 
+  try {
+    const resp = await db.sequelize.query(
+      `CALL drivers(:query_type, 
+        :driver_id, 
+        :name,
+            :nin,
+            :phone,
+            :email,
+            :address,
+            :dob,
+            :state,
+            :lga,
+           	:next_of_kin,
+            :vehicle_id)`,
+      {
+        replacements: {
+          query_type,
+          driver_id,
+          name,
+          nin,
+          phone,
+          email,
+          address,
+          dob,
+          state,
+          lga,
+          next_of_kin,
+          vehicle_id
+        }
+      }
+    );
+
+    res.status(200).json({ success: true, results: resp });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: 'Failed to fetch vehicle' });
+  }
 };
 
-//@   Get single vendor by id
-//@route  GET /vendors/:id
-// const findById = (req, res) => {
-//   const id = req.params.userId;
 
-//   User.findAll({ where: { id } })
-//     .then(user => {
-//       if(!user.length) {
-//         return res.json({ msg: 'user not found'})
-//       }
-//       res.json({ user })
-//     })
-//     .catch(err => res.status(500).json({ err }));
 // };
 
 
