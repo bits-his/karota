@@ -6,7 +6,7 @@ const { registerVehicle, getAllVehicles } = require("../controllers/vehicles_reg
 module.exports = (app) => {
   // create a new vendor
   app.post(
-    '/registervehicle/create',
+    '/vehicles/registration',
     registerVehicle
   );
   // select all vendors from the database.
