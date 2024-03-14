@@ -262,6 +262,9 @@ BEGIN
             _driver_next_of_kin,
             _last_vehicle_id
         ); 
+        ELSEIF _query_type ='select-all' THEN
+
+        SELECT * FROM vehicle_registration;
         END IF;
 
         END$$
