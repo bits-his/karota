@@ -9,14 +9,15 @@ module.exports.createAgent = async (req, res) => {
     phone_no = null,
     email = null,
     address = null,
-    super_agent = null,
+    super_agent = 1,
     state = null,
     lga = null,
+    service_location = null,
   } = req.body;
 
   try {
     const resp = await db.sequelize.query(
-      `CALL agent(:query_type, 
+      `CALL agents(:query_type, 
         :id, 
         :name,
         :phone_no,
@@ -24,7 +25,8 @@ module.exports.createAgent = async (req, res) => {
         :address,
         :super_agent,
         :state,
-        :lga)`,
+        :lga,
+        :service_location)`,
       {
         replacements: {
           query_type,
@@ -35,7 +37,8 @@ module.exports.createAgent = async (req, res) => {
           address,
           super_agent,
           state,
-          lga
+          lga,
+          service_location
         }
       }
     );
@@ -60,6 +63,7 @@ module.exports.fetchAgent = async (req, res) => {
     super_agent = null,
     state = null,
     lga = null,
+    service_location = null
   } = req.query;
 
   try {
@@ -72,7 +76,8 @@ module.exports.fetchAgent = async (req, res) => {
         :address,
         :super_agent,
         :state,
-        :lga)`,
+        :lga,
+        :service_location)`,
       {
         replacements: {
           query_type,
@@ -83,7 +88,8 @@ module.exports.fetchAgent = async (req, res) => {
           address,
           super_agent,
           state,
-          lga
+          lga,
+          service_location
         }
       }
     );
