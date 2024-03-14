@@ -22,6 +22,7 @@ module.exports.createVendor = async (req, res) => {
     contact_phone = null,
     contact_email = null,
     contact_lga = null,
+    vendor_id=null,
   } = req.body;
 
   if (!contact_password) {
@@ -32,7 +33,7 @@ module.exports.createVendor = async (req, res) => {
     const hashedContactPassword = await bcrypt.hash(contact_password, 10);
 
     const resp = await db.sequelize.query(
-      `CALL vendors(:query_type, :id, :vendor_name, :vendor_ofiice_address, :vendor_state, :vendor_lga, :vendor_phone, :vendor_email, :vendor_tin, :vendor_profile, :vendor_bn_rc, :contact_name, :contact_address, :contact_dob, :contact_state, :contact_password, :contact_phone, :contact_email, :contact_lga, :contact_vendor)`,
+      `CALL vendors(:query_type, :id, :vendor_name, :vendor_ofiice_address, :vendor_state, :vendor_lga, :vendor_phone, :vendor_email, :vendor_tin, :vendor_profile, :vendor_bn_rc, :contact_name, :contact_address, :contact_dob, :contact_state, :contact_password, :contact_phone, :contact_email, :contact_lga, :vendor_id)`,
       {
         replacements: {
           query_type,
@@ -54,7 +55,8 @@ module.exports.createVendor = async (req, res) => {
           contact_phone,
           contact_email,
           contact_lga,
-          contact_vendor
+          vendor_id,
+          // contact_vendor
         }
       }
     );
@@ -87,17 +89,12 @@ module.exports.getVendors = async (req, res) => {
     contact_phone = null,
     contact_email = null,
     contact_lga = null,
+    vendor_id=null
+
   } = req.query;
-
-  if (!contact_password) {
-    return res.status(400).json({ success: false, error: 'Contact password is required' });
-  }
-
-  try {
-    const hashedContactPassword = await bcrypt.hash(contact_password, 10);
-
+try{
     const resp = await db.sequelize.query(
-      `CALL vendors(:query_type, :id, :vendor_name, :vendor_ofiice_address, :vendor_state, :vendor_lga, :vendor_phone, :vendor_email, :vendor_tin, :vendor_profile, :vendor_bn_rc, :contact_name, :contact_address, :contact_dob, :contact_state, :contact_password, :contact_phone, :contact_email, :contact_lga, :contact_vendor)`,
+      `CALL vendors(:query_type, :id, :vendor_name, :vendor_ofiice_address, :vendor_state, :vendor_lga, :vendor_phone, :vendor_email, :vendor_tin, :vendor_profile, :vendor_bn_rc, :contact_name, :contact_address, :contact_dob, :contact_state, :contact_password, :contact_phone, :contact_email, :contact_lga, :vendor_id)`,
       {
         replacements: {
           query_type,
@@ -115,11 +112,11 @@ module.exports.getVendors = async (req, res) => {
           contact_address,
           contact_dob,
           contact_state,
-          contact_password: hashedContactPassword,
+          contact_password,
           contact_phone,
           contact_email,
           contact_lga,
-          contact_vendor,
+          vendor_id,
         }
       }
     );
