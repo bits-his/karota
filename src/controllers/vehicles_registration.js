@@ -31,7 +31,7 @@ module.exports.registerVehicle = async (req, res) => {
 
   try {
     const resp = await db.sequelize.query(
-      `CALL vehicles_registration(:query_type, 
+      `CALL vehicles_registration(
         :query_type,
         :owners_name,
         :owners_address,
@@ -99,18 +99,18 @@ module.exports.getRegVehicles = async (req, res) => {
   const {
     query_type = 'select',
     id = null,
-    owners_name=null,
-    owners_address=null,
-    owners_phone=null,
-    owners_email=null,
-    owners_state=null,
-    owners_lga=null,
-    owners_dob=null,
-    vehicle_id=null,
-    owner_id=null,
-    engine_no=null,
-    plate_no=null,
-    purchased_date=null,
+    owners_name = null,
+    owners_address = null,
+    owners_phone = null,
+    owners_email = null,
+    owners_state = null,
+    owners_lga = null,
+    owners_dob = null,
+    vehicle_id = null,
+    owner_id = null,
+    engine_no = null,
+    plate_no = null,
+    purchased_date = null,
     registered_lg
   } = req.query;
 
