@@ -269,3 +269,64 @@ BEGIN
 
         END$$
 DELIMITER ;
+
+
+
+DELIMITER $$
+DROP   PROCEDURE `agent`$$
+CREATE  PROCEDURE `agents`(
+    IN `_query_type` VARCHAR(10), 
+IN `_id` INT, 
+IN `_name` VARCHAR(255), 
+IN `_phone_no` VARCHAR(20), 
+IN `_email` VARCHAR(255), 
+IN `_address` VARCHAR(255), 
+IN `_super_agent` VARCHAR(255), 
+IN `_state` VARCHAR(100), 
+IN `_lga` VARCHAR(100), 
+IN `_service_location` VARCHAR(100))
+BEGIN
+    IF _query_type = 'create' THEN
+        INSERT INTO `agent` (
+            name,
+            phone_no,
+            email,
+            address,
+            super_agent,
+            state,
+            lga,
+            service_location
+        ) VALUES (
+            _name,
+            _phone_no,
+            _email,
+            _address,
+            _super_agent,
+            _state,
+            _lga,
+            _service_location
+        );
+    ELSEIF _query_type ='select' THEN
+        SELECT * FROM `agent`
+        WHERE id=_id;
+    ELSEIF _query_type ='select-all' THEN
+        SELECT * FROM `agent`;
+    ELSEIF _query_type ='update' THEN
+        UPDATE `agent` SET  
+            name = _name,
+            phone_no = _phone_no,
+            email = _email,
+            address = _address,
+            super_agent = _super_agent,
+            state = _state,
+            lga = _lga,
+            service_location = _service_location
+        WHERE  
+            id = _id;
+    ELSEIF _query_type ='delete' THEN
+        DELETE FROM `agent`
+        WHERE id = _id;
+
+    END IF;
+END$$
+DELIMITER ;
