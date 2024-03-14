@@ -1,7 +1,7 @@
 const passport = require('passport');
 const config = require('../config/config');
 const { allowOnly } = require('../services/routesHelper');
-const { registerVehicle, getAllVehicle } = require("../controllers/vehicles_registration");
+const { registerVehicle, getAllVehicles } = require("../controllers/vehicles_registration");
 
 module.exports = (app) => {
   // create a new vendor
@@ -11,7 +11,7 @@ module.exports = (app) => {
   );
   // select all vendors from the database.
   app.get('/vehicles',
-    getAllVehicle);
+    getAllVehicles);
 
 
   // /Name Get Vendor by ID  
