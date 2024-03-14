@@ -221,7 +221,7 @@ BEGIN
             state,
             lga,
            	next_of_kin,
-            vehicles_id
+            vehicle_id
         ) VALUES (
             _driver_name,
             _driver_nin,
