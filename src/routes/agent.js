@@ -1,4 +1,4 @@
-const { createAgent, getAllAgent } = require("../controllers/agent");
+const { createAgent, fetchAgent } = require("../controllers/agent");
 
 module.exports = (app) => {
   // create a new agent
@@ -7,6 +7,6 @@ module.exports = (app) => {
     createAgent
   );
   // select all agent from the database.
-  app.get('/getallagent/get',
-    getAllAgent);
+  app.get('/agent',
+    fetchAgent);
 };
