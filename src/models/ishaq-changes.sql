@@ -460,18 +460,38 @@ ALTER TABLE `super_agent` CHANGE `dob` `balance` DOUBLE(10,2) NULL DEFAULT '0.00
 
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS `agent` $$
-CREATE PROCEDURE `agents`(IN `_query_type` VARCHAR(10), IN `_id` INT, IN `_name` VARCHAR(255), IN `_phone_no` VARCHAR(20), IN `_email` VARCHAR(255), IN `_address` VARCHAR(255), IN `_super_agent` VARCHAR(255), IN `_state` VARCHAR(100), IN `_lga` VARCHAR(100), IN balance DOUBLE(10,2))
+DROP PROCEDURE IF EXISTS `agents` $$
+CREATE PROCEDURE `agents`(IN `_query_type` VARCHAR(10), IN `_id` INT, IN `_name` VARCHAR(255), IN `_phone_no` VARCHAR(20), IN `_email` VARCHAR(255), IN `_address` VARCHAR(255), IN `_super_agent` VARCHAR(255), IN `_state` VARCHAR(100), IN `_lga` VARCHAR(100), IN _password VARCHAR(100), IN balance DOUBLE(10,2))
 BEGIN
     IF _query_type = 'create' THEN
-        INSERT INTO `agent` (
+    INSERT INTO `users`(
+        `name`, 
+        `username`, 
+        `account_type`, 
+        `email`, 
+        `phone_no`, 
+        `status`, 
+        `role`,
+        `password`) 
+	VALUES(
+        p_name, 
+        p_name, 
+        'agent',
+        p_email,
+        p_phone, 
+        'active', 
+        'user',
+        _password );
+
+        INSERT INTO `agents` (
             name,
             phone_no,
             email,
             address,
             super_agent,
             state,
-            lga
+            lga,
+            user_id
         ) VALUES (
             _name,
             _phone_no,
@@ -479,13 +499,14 @@ BEGIN
             _address,
             _super_agent,
             _state,
-            _lga
+            _lga,             
+            LAST_INSERT_ID()     
         );
     ELSEIF _query_type ='select' THEN
-        SELECT * FROM `agent`
+        SELECT * FROM `agents`
         WHERE id=_id;
     ELSEIF _query_type ='update' THEN
-        UPDATE `agent` SET  
+        UPDATE `agents` SET  
             name = _name,
             phone_no = _phone_no,
             email = _email,
@@ -496,7 +517,7 @@ BEGIN
         WHERE  
             id = _id;
     ELSEIF _query_type ='delete' THEN
-        DELETE FROM `agent`
+        DELETE FROM `agents`
         WHERE id = _id;
 
     END IF;
@@ -526,3 +547,83 @@ CREATE TABLE `super_agents` (
   CONSTRAINT `fk_vendor` FOREIGN KEY (`vendor`) REFERENCES `vendors` (`id`)
 ) ;
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+ALTER TABLE `admins` ADD `user_id` INT(9) NULL DEFAULT NULL AFTER `name`;
+
+ALTER TABLE `agents` ADD `user_id` INT NULL DEFAULT NULL AFTER `id`;
+
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS  `super_agent`$$
+CREATE PROCEDURE `super_agents`(IN `_query_type` VARCHAR(10), IN `_id` INT, IN `_name` VARCHAR(50), IN `_phone` VARCHAR(50), IN `_email` VARCHAR(50), IN `_address` VARCHAR(50), IN `_vendor` INT, IN `_state` VARCHAR(50), IN `_lga` VARCHAR(100), IN `_nin` VARCHAR(15), IN `_dob` DATE, IN `_password` VARCHAR(100))
+BEGIN
+    IF _query_type = 'insert' THEN
+    
+      INSERT INTO `users`(
+        `name`, 
+        `username`, 
+        `account_type`, 
+        `email`, 
+        `phone_no`, 
+        `status`, 
+        `role`,
+        `password`) 
+	VALUES(
+        _name, 
+        _name, 
+        'agent',
+        _email,
+        _phone, 
+        'active', 
+        'user',
+        _password );
+
+        INSERT INTO `super_agent` (
+            name,
+            phone,
+            email,
+            address,
+            vendor,
+            state,
+            lga,
+            nin,
+            dob,
+            user_id
+        ) VALUES (
+            _name,
+            _phone,
+            _email,
+            _address,
+            _vendor,
+            _state,
+            _lga,
+            _nin,
+            _dob,
+            LAST_INSERT_ID()
+        );
+    ELSEIF _query_type ='select' THEN
+        SELECT * FROM `super_agent`
+        WHERE id=_id;
+    ELSEIF _query_type ='update' THEN
+        UPDATE `super_agent` SET  
+            name = IFNULL(_name,name),
+            phone = IFNULL(_phone,phone),
+            email = IFNULL(_email,email),
+            address = IFNULL(_address,address),
+            vendor = IFNULL(_vendor,vendor),
+            state = IFNULL(_state,lga),
+            lga = IFNULL(_lga,lga)
+        WHERE  
+            id = _id;
+    ELSEIF _query_type ='delete' THEN
+        DELETE FROM `agent`
+        WHERE id = _id;
+
+    END IF;
+END$$
+DELIMITER ;
+
+ALTER TABLE `vendors` ADD `user_id` INT NULL DEFAULT NULL AFTER `id`;
+ALTER TABLE `vendors` ADD `balance` DOUBLE(10,2) NOT NULL DEFAULT '0.00' AFTER `vendor_bn_rc`;

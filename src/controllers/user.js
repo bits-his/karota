@@ -201,7 +201,7 @@ module.exports.verifyToken = async function (req, res) {
     res.json({
       success: true,
       user,
-      profile: profile,
+      profile: profile[0],
     });
   } catch (err) {
     console.error(err);

@@ -10,9 +10,6 @@ module.exports = (app) => {
 
     app.get('/superagent'
     ,fetchSuperAgent);
-
-
-
 }
 
 
