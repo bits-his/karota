@@ -502,3 +502,27 @@ BEGIN
     END IF;
 END$$
 DELIMITER ;
+
+ALTER TABLE `drivers` ADD `balance` DOUBLE(10,2) NOT NULL DEFAULT '0.00' AFTER `vehicle_id`; 
+
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE `super_agent`;
+
+CREATE TABLE `super_agents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `address` varchar(255) NOT NULL,
+  `vendor` int(11) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `lga` varchar(255) NOT NULL,
+  `nin` varchar(12) DEFAULT NULL,
+  `balance` double(10,2) DEFAULT 0.00,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `fk_vendor` (`vendor`),
+  CONSTRAINT `fk_vendor` FOREIGN KEY (`vendor`) REFERENCES `vendors` (`id`)
+) ;
+SET FOREIGN_KEY_CHECKS = 1;

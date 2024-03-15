@@ -1,7 +1,7 @@
 const passport = require('passport');
 const config = require('../config/config');
 const { allowOnly } = require('../services/routesHelper');
-const { getAllDriver, registerDriver } = require("../controllers/driver");
+const { getAllDriver, registerDriver } = require("../controllers/drivers");
 
 module.exports = (app) => {
   // create a new vendor

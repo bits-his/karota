@@ -44,8 +44,8 @@ require('./routes/incedent.js')(app);
 require('./routes/payment.js')(app);
 require('./routes/vendors.js')(app);
 require('./routes/vehicles_registration.js')(app);
-require('./routes/driver.js')(app);
-require('./routes/super_agent.js')(app);
+require('./routes/drivers.js')(app);
+require('./routes/super_agents.js')(app);
 require('./routes/agents.js')(app);
 require('./routes/vehicle_owners.js')(app);
 
