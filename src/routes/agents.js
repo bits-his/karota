@@ -1,4 +1,4 @@
-const { createAgent, fetchAgent } = require("../controllers/agent");
+const { createAgent, fetchAgent } = require("../controllers/agents");
 
 module.exports = (app) => {
   // create a new agent

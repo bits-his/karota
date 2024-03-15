@@ -13,6 +13,7 @@ module.exports.createAgent = async (req, res) => {
     state = null,
     lga = null,
     service_location = null,
+    balance = null,
   } = req.body;
 
   try {
@@ -26,7 +27,8 @@ module.exports.createAgent = async (req, res) => {
         :super_agent,
         :state,
         :lga,
-        :service_location)`,
+        :service_location,
+        :balance)`,
       {
         replacements: {
           query_type,
@@ -38,7 +40,8 @@ module.exports.createAgent = async (req, res) => {
           super_agent,
           state,
           lga,
-          service_location
+          service_location,
+          balance
         }
       }
     );
@@ -63,7 +66,8 @@ module.exports.fetchAgent = async (req, res) => {
     super_agent = null,
     state = null,
     lga = null,
-    service_location = null
+    service_location = null,
+    balance = null
   } = req.query;
 
   try {
@@ -77,7 +81,8 @@ module.exports.fetchAgent = async (req, res) => {
         :super_agent,
         :state,
         :lga,
-        :service_location)`,
+        :service_location,
+        :balance)`,
       {
         replacements: {
           query_type,
@@ -89,7 +94,8 @@ module.exports.fetchAgent = async (req, res) => {
           super_agent,
           state,
           lga,
-          service_location
+          service_location,
+          balance
         }
       }
     );

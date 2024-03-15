@@ -194,14 +194,14 @@ module.exports.verifyToken = async function (req, res) {
       });
     }
 
-    // const profile = await db.sequelize.query(
-    //   `SELECT * FROM ${user.role}s WHERE user_id=${user.id}`
-    // );
+    const profile = await db.sequelize.query(
+      `SELECT * FROM ${user.role}s WHERE user_id=${user.id}`
+    );
 
     res.json({
       success: true,
       user,
-      profile: {},
+      profile: profile,
     });
   } catch (err) {
     console.error(err);
