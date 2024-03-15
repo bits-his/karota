@@ -381,3 +381,74 @@ BEGIN
         END IF;
         END$$
 DELIMITER ;
+
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS `vehicle_owners`//
+CREATE PROCEDURE `vehicle_owners`(
+    IN query_type VARCHAR(255),
+    IN p_id INT,
+    IN p_user_id INT,
+    IN p_name VARCHAR(255),
+    IN p_address VARCHAR(255),
+    IN p_phone VARCHAR(20),
+    IN p_email VARCHAR(255),
+    IN p_state VARCHAR(100),
+    IN p_lga VARCHAR(100),
+    IN p_dob DATE,
+    IN p_password VARCHAR(255)
+)
+BEGIN
+IF query_type ='insert' THEN
+      INSERT INTO `users`(
+        `name`, 
+        `username`, 
+        `account_type`, 
+        `email`, 
+        `phone_no`, 
+        `status`, 
+        `role`,
+        `password`) 
+	VALUES(
+        p_name, 
+        p_name, 
+        'vehicle',
+        p_email,
+        p_phone, 
+        'active', 
+        'user',
+        _password );
+    INSERT INTO `vehicle_owner`(
+        `user_id`,
+        `name`,
+        `address`,
+        `phone`,
+        `email`,
+        `state`,
+        `lga`,
+        `dob`,
+        `user_id`
+    ) VALUES (
+        LAST_INSERT_ID(),
+        p_name,
+        p_address,
+        p_phone,
+        p_email,
+        p_state,
+        p_lga,
+        p_dob,
+        p_user_id
+    );
+     ELSEIF query_type ='select' THEN
+        SELECT * FROM `vehicle_owner`
+        WHERE id=p_id;
+    ELSEIF query_type ='select-all' THEN
+        SELECT * FROM `vehicle_owner`;
+    ELSEIF query_type ='search' THEN
+        SELECT * FROM `vehicle_owner`
+        WHERE phone LIKE CONCAT('%',p_phone,'%') OR email  LIKE CONCAT('%',p_email,'%')  OR name  LIKE CONCAT('%',p_name,'%') ;
+    END IF;
+    
+END //
+
+DELIMITER ;

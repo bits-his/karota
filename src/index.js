@@ -50,6 +50,7 @@ require('./routes/vehicles_registration.js')(app);
 require('./routes/driver.js')(app);
 require('./routes/super_agent.js')(app);
 require('./routes/agent.js')(app);
+require('./routes/vehicle_owners.js')(app);
 
 
 
