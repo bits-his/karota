@@ -453,3 +453,5 @@ IF query_type ='insert' THEN
 END //
 
 DELIMITER ;
+
+ALTER TABLE `vehicle_registration` ADD `balance` DOUBLE(10,0) NOT NULL DEFAULT '0.00' AFTER `registered_lg`; 
