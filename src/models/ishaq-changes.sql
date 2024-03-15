@@ -334,6 +334,7 @@ DELIMITER ;
 ALTER TABLE `agent` ADD `balance` DOUBLE(10,2) NOT NULL DEFAULT '0.00' AFTER `service_location`; 
 ALTER TABLE `vehicle_registration` ADD `state_registrered` VARCHAR(50) NULL DEFAULT NULL AFTER `plate_no`; 
 
+-- 15/03/2024
 
 ALTER TABLE `vehicle_registration` ADD `lg_reg_no` VARCHAR(50) NULL DEFAULT NULL AFTER `owner_id`, ADD `manifacturer` VARCHAR(50) NULL DEFAULT NULL AFTER `lg_reg_no`, ADD `manifacturing_date` DATE NULL DEFAULT NULL AFTER `manifacturer`;
 
