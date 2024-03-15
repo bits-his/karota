@@ -17,9 +17,6 @@ app.use(bodyParser.json());
 
 let port = process.env.PORT || 34567;
 
-// set the view engine to ejs
-app.set('view engine', 'ejs');
-
 // make express look in the public directory for assets (css/js/img)
 app.use(express.static(__dirname + '/public'));
 
@@ -45,7 +42,7 @@ require('./routes/user.js')(app);
 require('./routes/create_user.js')(app);
 require('./routes/incedent.js')(app);
 require('./routes/payment.js')(app);
-require('./routes/vendor.js')(app);
+require('./routes/vendors.js')(app);
 require('./routes/vehicles_registration.js')(app);
 require('./routes/driver.js')(app);
 require('./routes/super_agent.js')(app);
