@@ -18,7 +18,7 @@ module.exports.registerVehicle = async (req, res) => {
 
   try {
     const resp = await db.sequelize.query(
-      `CALL vehicles_registration(
+      `CALL vehicles(
         :query_type,  
         :id, 
        :owner_id, 
@@ -73,7 +73,7 @@ module.exports.getRegVehicles = async (req, res) => {
 
   try {
     const resp = await db.sequelize.query(
-      `CALL vehicles_registration(
+      `CALL vehicles(
         :query_type,  
         :id, 
        :owner_id, 
