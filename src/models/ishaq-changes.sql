@@ -330,3 +330,54 @@ BEGIN
     END IF;
 END$$
 DELIMITER ;
+
+ALTER TABLE `agent` ADD `balance` DOUBLE(10,2) NOT NULL DEFAULT '0.00' AFTER `service_location`; 
+ALTER TABLE `vehicle_registration` ADD `state_registrered` VARCHAR(50) NULL DEFAULT NULL AFTER `plate_no`; 
+
+
+ALTER TABLE `vehicle_registration` ADD `lg_reg_no` VARCHAR(50) NULL DEFAULT NULL AFTER `owner_id`, ADD `manifacturer` VARCHAR(50) NULL DEFAULT NULL AFTER `lg_reg_no`, ADD `manifacturing_date` DATE NULL DEFAULT NULL AFTER `manifacturer`;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `vehicle`$$
+CREATE PROCEDURE `vehicles`(
+    IN `_query_type` VARCHAR(10),  
+    IN `_id` DATE, 
+    IN `_owner_id` DATE, 
+    IN `_lg_reg_no` VARCHAR(50),
+    IN `_engine_no` VARCHAR(50), 
+    IN `_plate_no` VARCHAR(50), 
+    IN `_manifacturer`   VARCHAR(50),
+    IN `_manifacturing_date`   DATE,
+    IN `_purchased_date` DATE, 
+    IN `_state_registrered` VARCHAR(50),
+    IN `_registered_lg` VARCHAR(50)
+)
+BEGIN
+	
+    IF _query_type = 'insert' THEN
+  INSERT INTO `vehicle_registration`(`owner_id`, `lg_reg_no`, `manifacturer`, `manifacturing_date`, `engine_no`, `plate_no`, `state_registrered`, `purchased_date`, `registered_lg`) 
+    VALUES (
+        _owner_id,
+        _lg_reg_no,
+        _manifacturer,
+        _manifacturing_date,
+        _engine_no,
+        _plate_no,
+        _state_registrered,
+        _purchased_date,
+        _state_registrered,
+        _purchased_date,
+        _registered_lg
+    );   
+     ELSEIF _query_type ='select' THEN
+        SELECT * FROM `vehicle_registration`
+        WHERE id=_id;
+    ELSEIF _query_type ='select-all' THEN
+        SELECT * FROM `vehicle_registration`;
+    ELSEIF _query_type ='search' THEN
+        SELECT * FROM `vehicle_registration`
+        WHERE lg_reg_no LIKE CONCAT('%',_lg_reg_no,'%') OR engine_no  LIKE CONCAT('%',_engine_no,'%')  OR plate_no  LIKE CONCAT('%',_plate_no,'%') ;
+    
+        END IF;
+        END$$
+DELIMITER ;
