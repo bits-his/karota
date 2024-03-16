@@ -977,8 +977,11 @@ CREATE  PROCEDURE `vendors`(
     IN `_contact_lga` VARCHAR(255), 
     IN `_contact_vendor` INT)
 BEGIN
+DECLARE last_user_id INT;
     IF _query_type = 'insert' THEN
-    
+     INSERT INTO `Users`( `name`, `username`, `account_type`, `email`, `phone`, `password`, `status`, `role`)
+    VALUES ( `_contact_name`, `_contact_name`, 'vendor', `_contact_email`, `_contact_phone`, `_contact_password`, 'active','vendor');
+    SET last_user_id = LAST_INSERT_ID();
         INSERT INTO `vendors` (
             vendor_name,
             vendor_ofiice_address,
@@ -988,7 +991,8 @@ BEGIN
             vendor_org_email,
             vendor_tin,
             vendor_profile,
-            vendor_bn_rc
+            vendor_bn_rc,
+            user_id
         ) VALUES (
             _vendor_name,
             _vendor_ofiice_address,
@@ -998,36 +1002,44 @@ BEGIN
             _vendor_org_email,
             _vendor_tin,
             _vendor_profile,
-            _vendor_bn_rc
+            _vendor_bn_rc,
+            last_user_id
         );
         
         INSERT INTO `vendor_contact` (
             contact_name,
             contact_address,
-            contact_dob,
             contact_state,
             contact_phone,
             contact_email,
             contact_lga,
-            vendor_id
+            vendor_id,
+            user_id
         ) VALUES (
             _contact_name,
             _contact_address,
-            _contact_dob,
             _contact_state,
             _contact_phone,
             _contact_email,
             _contact_lga,
-            LAST_INSERT_ID()
+            LAST_INSERT_ID(),
+            last_user_id
         );
-          INSERT INTO `Users`( `name`, `username`, `account_type`, `email`, `phone`, `password`, `status`, `role`,`vendor_id`)
-    VALUES ( `_contact_name`, `_contact_name`, 'vendor', `_contact_email`, `_contact_phone`, `_contact_password`, 'active','admin',LAST_INSERT_ID() );
-    ELSEIF _query_type ='delete' THEN
+          ELSEIF _query_type ='delete' THEN
         DELETE FROM `vendors`
         WHERE id = _id;
+         ELSEIF _query_type ='select' THEN
+        SELECT * FROM `vendors`
+        WHERE id=_id;
+    ELSEIF _query_type ='select-all' THEN
+        SELECT * FROM `vendors`;
+    ELSEIF _query_type ='search' THEN
+        SELECT * FROM `vendors`
+        WHERE vendor_name LIKE CONCAT('%',_vendor_name,'%') OR vendor_org_phone  LIKE CONCAT('%',_vendor_org_phone,'%') OR vendor_org_email  LIKE CONCAT('%',_vendor_org_email,'%');
     END IF;
 END$$
 DELIMITER ;
 
-
+ALTER TABLE `vendor_contact` DROP `contact_dob`;
 ALTER TABLE `vendors` CHANGE `vendor_org_phone` `vendor_org_phone` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL;
+ALTER TABLE `vendor_contact` ADD `user_id` INT(9) NULL DEFAULT NULL AFTER `vendor_id`;
