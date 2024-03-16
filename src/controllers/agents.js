@@ -9,34 +9,27 @@ module.exports.createAgent = async (req, res) => {
     phone_no = null,
     email = null,
     address = null,
-    super_agent = 1,
+    super_agent = null,
     state = null,
     lga = null,
-    service_location = null,
-    balance = null,
     password = null,
+    balance = null,
   } = req.body;
 
-  if (!password) {
-    return res.status(400).json({ success: false, error: 'Password is required' });
-  }
-
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     const resp = await db.sequelize.query(
-      `CALL agents(:query_type, 
-        :id, 
-        :name,
-        :phone_no,
-        :email,
-        :address,
-        :super_agent,
-        :state,
-        :lga,
-        :service_location,
-        :password,
-        :balance)`,
+      `CALL agents(
+      :query_type,
+      :id,
+      :name,
+      :phone_no,
+      :email,
+      :address,
+      :super_agent,
+      :state,
+      :lga,
+      :password,
+      :balance)`,
       {
         replacements: {
           query_type,
@@ -48,8 +41,7 @@ module.exports.createAgent = async (req, res) => {
           super_agent,
           state,
           lga,
-          service_location,
-          password: hashedPassword,
+          password,
           balance
         }
       }
@@ -58,7 +50,7 @@ module.exports.createAgent = async (req, res) => {
     res.status(200).json({ success: true, results: resp });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, error: 'Failed to register agent' });
+    res.status(500).json({ success: false, error: 'Failed to fetch agent' });
   }
 };
 
@@ -75,25 +67,24 @@ module.exports.fetchAgent = async (req, res) => {
     super_agent = null,
     state = null,
     lga = null,
-    service_location = null,
+    password = null,
     balance = null,
-    password = null
   } = req.query;
 
   try {
     const resp = await db.sequelize.query(
-      `CALL agents(:query_type, 
-        :id, 
-        :name,
-        :phone_no,
-        :email,
-        :address,
-        :super_agent,
-        :state,
-        :lga,
-        :service_location,
-        :password,
-        :balance)`,
+      `CALL agents(
+      :query_type,
+      :id,
+      :name,
+      :phone_no,
+      :email,
+      :address,
+      :super_agent,
+      :state,
+      :lga,
+      :password,
+      :balance)`,
       {
         replacements: {
           query_type,
@@ -105,7 +96,6 @@ module.exports.fetchAgent = async (req, res) => {
           super_agent,
           state,
           lga,
-          service_location,
           password,
           balance
         }

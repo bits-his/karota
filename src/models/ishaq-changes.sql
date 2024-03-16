@@ -775,10 +775,6 @@ BEGIN
 END$$
 DELIMITER ;
 
-DELIMITER $$
-DROP  PROCEDURE IF  EXISTS `super_agent`$$
-DROP  PROCEDURE IF  EXISTS `super_agents`$$
-
 
 DELIMITER $$
 DROP   PROCEDURE IF EXISTS `super_agent`$$
