@@ -14,9 +14,16 @@ module.exports.createAgent = async (req, res) => {
     lga = null,
     service_location = null,
     balance = null,
+    password = null,
   } = req.body;
 
+  if (!password) {
+    return res.status(400).json({ success: false, error: 'Password is required' });
+  }
+
   try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const resp = await db.sequelize.query(
       `CALL agents(:query_type, 
         :id, 
@@ -28,6 +35,7 @@ module.exports.createAgent = async (req, res) => {
         :state,
         :lga,
         :service_location,
+        :password,
         :balance)`,
       {
         replacements: {
@@ -41,6 +49,7 @@ module.exports.createAgent = async (req, res) => {
           state,
           lga,
           service_location,
+          password: hashedPassword,
           balance
         }
       }
@@ -67,7 +76,8 @@ module.exports.fetchAgent = async (req, res) => {
     state = null,
     lga = null,
     service_location = null,
-    balance = null
+    balance = null,
+    password = null
   } = req.query;
 
   try {
@@ -82,6 +92,7 @@ module.exports.fetchAgent = async (req, res) => {
         :state,
         :lga,
         :service_location,
+        :password,
         :balance)`,
       {
         replacements: {
@@ -95,6 +106,7 @@ module.exports.fetchAgent = async (req, res) => {
           state,
           lga,
           service_location,
+          password,
           balance
         }
       }

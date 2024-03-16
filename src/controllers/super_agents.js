@@ -16,9 +16,16 @@ module.exports.superAgent = async (req, res) => {
     lga = null,
     nin = null,
     dob = null,
+    password = null
   } = req.body;
 
+  if (!password) {
+    return res.status(400).json({ success: false, error: 'Password is required' });
+  }
+
   try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const resp = await db.sequelize.query(
       `CALL super_agents(:query_type, 
         :id, 
@@ -30,7 +37,8 @@ module.exports.superAgent = async (req, res) => {
             :state,
             :lga,
             :nin,
-            :dob)`,
+            :dob,
+            :password)`,
       {
         replacements: {
           query_type,
@@ -43,7 +51,8 @@ module.exports.superAgent = async (req, res) => {
           state,
           lga,
           nin,
-          dob
+          dob,
+          password: hashedPassword
         },
       }
     );
@@ -55,7 +64,10 @@ module.exports.superAgent = async (req, res) => {
       .status(500)
       .json({ success: false, error: "Failed to register super agent" });
   }
-};
+  // } catch (err) {
+  //   res.status(500).json({ success: false, error: "Internal error occured." });
+  // }
+}
 
 //   @ Fetch a single super agent by ID
 //   @route GET /api/superagent/:id
@@ -72,6 +84,7 @@ module.exports.fetchSuperAgent = async (req, res) => {
     lga = null,
     nin = null,
     dob = null,
+    password = null
   } = req.query;
 
   try {
@@ -86,7 +99,8 @@ module.exports.fetchSuperAgent = async (req, res) => {
             :state,
             :lga,
             :nin,
-            :dob)`,
+            :dob,
+            :password)`,
       {
         replacements: {
           query_type,
@@ -99,7 +113,8 @@ module.exports.fetchSuperAgent = async (req, res) => {
           state,
           lga,
           nin,
-          dob
+          dob,
+          password
         },
       }
     );

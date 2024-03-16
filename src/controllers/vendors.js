@@ -16,13 +16,12 @@ module.exports.createVendor = async (req, res) => {
     vendor_bn_rc = null,
     contact_name = null,
     contact_address = null,
-    contact_dob = null,
     contact_state = null,
     contact_password = null,
     contact_phone = null,
     contact_email = null,
     contact_lga = null,
-    vendor_id=null,
+    vendor_id = null,
   } = req.body;
 
   if (!contact_password) {
@@ -33,7 +32,26 @@ module.exports.createVendor = async (req, res) => {
     const hashedContactPassword = await bcrypt.hash(contact_password, 10);
 
     const resp = await db.sequelize.query(
-      `CALL vendors(:query_type, :id, :vendor_name, :vendor_ofiice_address, :vendor_state, :vendor_lga, :vendor_phone, :vendor_email, :vendor_tin, :vendor_profile, :vendor_bn_rc, :contact_name, :contact_address, :contact_dob, :contact_state, :contact_password, :contact_phone, :contact_email, :contact_lga, :vendor_id)`,
+      `CALL vendors(
+        :query_type, 
+        :id, 
+        :vendor_name, 
+        :vendor_ofiice_address, 
+        :vendor_state, 
+        :vendor_lga, 
+        :vendor_phone, 
+        :vendor_email, 
+        :vendor_tin, 
+        :vendor_profile, 
+        :vendor_bn_rc, 
+        :contact_name, 
+        :contact_address, 
+        :contact_state, 
+        :contact_password, 
+        :contact_phone, 
+        :contact_email, 
+        :contact_lga, 
+        :vendor_id)`,
       {
         replacements: {
           query_type,
@@ -49,14 +67,12 @@ module.exports.createVendor = async (req, res) => {
           vendor_bn_rc,
           contact_name,
           contact_address,
-          contact_dob,
           contact_state,
           contact_password: hashedContactPassword,
           contact_phone,
           contact_email,
           contact_lga,
-          vendor_id,
-          // contact_vendor
+          vendor_id
         }
       }
     );
@@ -83,18 +99,35 @@ module.exports.getVendors = async (req, res) => {
     vendor_bn_rc = null,
     contact_name = null,
     contact_address = null,
-    contact_dob = null,
     contact_state = null,
     contact_password = null,
     contact_phone = null,
     contact_email = null,
     contact_lga = null,
-    vendor_id=null
-
+    vendor_id = null,
   } = req.query;
-try{
+  try {
     const resp = await db.sequelize.query(
-      `CALL vendors(:query_type, :id, :vendor_name, :vendor_ofiice_address, :vendor_state, :vendor_lga, :vendor_phone, :vendor_email, :vendor_tin, :vendor_profile, :vendor_bn_rc, :contact_name, :contact_address, :contact_dob, :contact_state, :contact_password, :contact_phone, :contact_email, :contact_lga, :vendor_id)`,
+      `CALL vendors(
+        :query_type, 
+        :id, 
+        :vendor_name, 
+        :vendor_ofiice_address, 
+        :vendor_state, 
+        :vendor_lga, 
+        :vendor_phone, 
+        :vendor_email, 
+        :vendor_tin, 
+        :vendor_profile, 
+        :vendor_bn_rc, 
+        :contact_name, 
+        :contact_address, 
+        :contact_state, 
+        :contact_password, 
+        :contact_phone, 
+        :contact_email, 
+        :contact_lga, 
+        :vendor_id)`,
       {
         replacements: {
           query_type,
@@ -110,7 +143,6 @@ try{
           vendor_bn_rc,
           contact_name,
           contact_address,
-          contact_dob,
           contact_state,
           contact_password,
           contact_phone,
