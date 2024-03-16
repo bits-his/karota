@@ -658,7 +658,7 @@ CREATE TABLE `vehicle_owners` (
 DELIMITER $$
 DROP  PROCEDURE IF  EXISTS `agens`$$
 DROP  PROCEDURE IF  EXISTS `agents`$$
-CREATE  PROCEDURE `agents`(IN `_query_type` VARCHAR(10), IN `_id` INT, IN `_name` VARCHAR(255), IN `_phone_no` VARCHAR(20), IN `_email` VARCHAR(255), IN `_address` VARCHAR(255), IN `_super_agent` VARCHAR(255), IN `_state` VARCHAR(100), IN `_lga` VARCHAR(100), IN `_password` VARCHAR(100), IN `_balance` DOUBLE(10,2))
+CREATE  PROCEDURE `agents`(IN `_query_type` VARCHAR(10), IN `_id` INT, IN `_name` VARCHAR(255), IN `_phone` VARCHAR(20), IN `_email` VARCHAR(255), IN `_address` VARCHAR(255), IN `_super_agent` VARCHAR(255), IN `_state` VARCHAR(100), IN `_lga` VARCHAR(100), IN `_password` VARCHAR(100), IN `_balance` DOUBLE(10,2))
 BEGIN
     IF _query_type = 'create' THEN
     INSERT INTO `users`(
@@ -666,7 +666,7 @@ BEGIN
         `username`, 
         `account_type`, 
         `email`, 
-        `phone_no`, 
+        `phone`, 
         `status`, 
         `role`,
         `password`) 
@@ -682,7 +682,7 @@ BEGIN
 
         INSERT INTO `agents` (
             name,
-            phone_no,
+            phone,
             email,
             address,
             super_agent,
@@ -691,7 +691,7 @@ BEGIN
             user_id
         ) VALUES (
             _name,
-            _phone_no,
+            _phone,
             _email,
             _address,
             _super_agent,
@@ -705,7 +705,7 @@ BEGIN
     ELSEIF _query_type ='update' THEN
         UPDATE `agents` SET  
             name = _name,
-            phone_no = _phone_no,
+            phone = _phone,
             email = _email,
             address = _address,
             super_agent = _super_agent,
@@ -795,11 +795,11 @@ BEGIN
 	VALUES(
         _name, 
         _name, 
-        'agent',
+        'super_agents',
         _email,
         _phone, 
         'active', 
-        'user',
+        'super_agent',
         _password );
 
         INSERT INTO `super_agents` (
@@ -860,7 +860,7 @@ IF query_type ='insert' THEN
         `username`, 
         `account_type`, 
         `email`, 
-        `phone_no`, 
+        `phone`, 
         `status`, 
         `role`,
         `password`) 
@@ -1043,3 +1043,91 @@ DELIMITER ;
 ALTER TABLE `vendor_contact` DROP `contact_dob`;
 ALTER TABLE `vendors` CHANGE `vendor_org_phone` `vendor_org_phone` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL;
 ALTER TABLE `vendor_contact` ADD `user_id` INT(9) NULL DEFAULT NULL AFTER `vendor_id`;
+ALTER TABLE `agents` CHANGE `phone_no` `phone` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+
+TRUNCATE `Users`;
+
+ALTER TABLE `Users` ADD UNIQUE(`email`);
+
+
+DELIMITER $$
+DROP  PROCEDURE IF  EXISTS `agens`$$
+DROP  PROCEDURE IF  EXISTS `agents`$$
+CREATE  PROCEDURE `agents`(
+    IN `_query_type` VARCHAR(10), 
+IN `_id` INT, 
+IN `_name` VARCHAR(255), 
+IN `_phone` VARCHAR(20), 
+IN `_email` VARCHAR(255), 
+IN `_address` VARCHAR(255), 
+IN `_super_agent` VARCHAR(255), 
+IN `_state` VARCHAR(100), 
+IN `_lga` VARCHAR(100), 
+IN `_password` VARCHAR(100), 
+IN `_balance` DOUBLE(10,2),
+IN `_service_location` VARCHAR(100)
+
+)
+BEGIN
+    IF _query_type = 'create' THEN
+    INSERT INTO `users`(
+        `name`, 
+        `username`, 
+        `account_type`, 
+        `email`, 
+        `phone`, 
+        `status`, 
+        `role`,
+        `password`) 
+	VALUES(
+        _name, 
+        _name, 
+        'agent',
+        _email,
+        _phone, 
+        'active', 
+        'agent',
+        _password );
+
+        INSERT INTO `agents` (
+            name,
+            phone,
+            email,
+            address,
+            super_agent,
+            state,
+            lga,
+            service_location,
+            user_id
+        ) VALUES (
+            _name,
+            _phone,
+            _email,
+            _address,
+            _super_agent,
+            _state,
+            _lga,      
+            _service_location,       
+            LAST_INSERT_ID()     
+        );
+    ELSEIF _query_type ='select' THEN
+        SELECT * FROM `agents`
+        WHERE id=_id;
+    ELSEIF _query_type ='update' THEN
+        UPDATE `agents` SET  
+            name = _name,
+            phone = _phone,
+            email = _email,
+            address = _address,
+            super_agent = _super_agent,
+            state = _state,
+            lga = _lga
+        WHERE  
+            id = _id;
+    ELSEIF _query_type ='delete' THEN
+        DELETE FROM `agents`
+        WHERE id = _id;
+
+    END IF;
+END$$
+DELIMITER ;

@@ -3,7 +3,7 @@ const { createAgent, fetchAgent } = require("../controllers/agents");
 module.exports = (app) => {
   // create a new agent
   app.post(
-    '/agens/create',
+    '/agents/create',
     createAgent
   );
   // select all agent from the database.

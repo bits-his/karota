@@ -6,7 +6,7 @@ module.exports.createAgent = async (req, res) => {
     query_type = 'insert',
     id = null,
     name = null,
-    phone_no = null,
+    phone = null,
     email = null,
     address = null,
     super_agent = null,
@@ -14,6 +14,7 @@ module.exports.createAgent = async (req, res) => {
     lga = null,
     password = null,
     balance = null,
+    service_location = null
   } = req.body;
 
   try {
@@ -22,27 +23,29 @@ module.exports.createAgent = async (req, res) => {
       :query_type,
       :id,
       :name,
-      :phone_no,
+      :phone,
       :email,
       :address,
       :super_agent,
       :state,
       :lga,
       :password,
-      :balance)`,
+      :balance,
+      :service_location)`,
       {
         replacements: {
           query_type,
           id,
           name,
-          phone_no,
+          phone,
           email,
           address,
           super_agent,
           state,
           lga,
           password,
-          balance
+          balance,
+          service_location
         }
       }
     );
@@ -61,7 +64,7 @@ module.exports.fetchAgent = async (req, res) => {
     query_type = 'select',
     id = null,
     name = null,
-    phone_no = null,
+    phone = null,
     email = null,
     address = null,
     super_agent = null,
@@ -69,6 +72,7 @@ module.exports.fetchAgent = async (req, res) => {
     lga = null,
     password = null,
     balance = null,
+    service_location = null
   } = req.query;
 
   try {
@@ -77,27 +81,29 @@ module.exports.fetchAgent = async (req, res) => {
       :query_type,
       :id,
       :name,
-      :phone_no,
+      :phone,
       :email,
       :address,
       :super_agent,
       :state,
       :lga,
       :password,
-      :balance)`,
+      :balance,
+      :service_location)`,
       {
         replacements: {
           query_type,
           id,
           name,
-          phone_no,
+          phone,
           email,
           address,
           super_agent,
           state,
           lga,
           password,
-          balance
+          balance,
+          service_location
         }
       }
     );
@@ -108,11 +114,3 @@ module.exports.fetchAgent = async (req, res) => {
     res.status(500).json({ success: false, error: 'Failed to fetch agent' });
   }
 };
-
-
-
-
-
-
-
-// http://localhost:34567/superagent?id=2&query_type=select
