@@ -780,7 +780,10 @@ DROP  PROCEDURE IF  EXISTS `super_agent`$$
 DROP  PROCEDURE IF  EXISTS `super_agents`$$
 
 
-CREATE  PROCEDURE `super_agents`(IN `_query_type` VARCHAR(10), IN `_id` INT, IN `_name` VARCHAR(50), IN `_phone` VARCHAR(50), IN `_email` VARCHAR(50), IN `_address` VARCHAR(50), IN `_vendor` INT, IN `_state` VARCHAR(50), IN `_lga` VARCHAR(100), IN `_nin` VARCHAR(15), IN `_dob` DATE, IN `_password` VARCHAR(100))
+DELIMITER $$
+DROP   PROCEDURE IF EXISTS `super_agent`$$
+DROP   PROCEDURE IF EXISTS `super_agents`$$
+CREATE  PROCEDURE `super_agents`(IN `_query_type` VARCHAR(10), IN `_id` INT, IN `_name` VARCHAR(50), IN `_phone` VARCHAR(50), IN `_email` VARCHAR(50), IN `_address` VARCHAR(50), IN `_vendor` INT, IN `_state` VARCHAR(50), IN `_lga` VARCHAR(100), IN `_nin` VARCHAR(15), IN `_password` VARCHAR(100))
 BEGIN
     IF _query_type = 'insert' THEN
     
@@ -789,7 +792,7 @@ BEGIN
         `username`, 
         `account_type`, 
         `email`, 
-        `phone_no`, 
+        `phone`, 
         `status`, 
         `role`,
         `password`) 
@@ -803,7 +806,7 @@ BEGIN
         'user',
         _password );
 
-        INSERT INTO `super_agent` (
+        INSERT INTO `super_agents` (
             name,
             phone,
             email,
@@ -812,7 +815,6 @@ BEGIN
             state,
             lga,
             nin,
-            dob,
             user_id
         ) VALUES (
             _name,
@@ -823,14 +825,16 @@ BEGIN
             _state,
             _lga,
             _nin,
-            _dob,
             LAST_INSERT_ID()
         );
     ELSEIF _query_type ='select' THEN
-        SELECT * FROM `super_agent`
+        SELECT * FROM `super_agents`
         WHERE id=_id;
+    ELSEIF _query_type ='select-all' THEN
+        SELECT * FROM `super_agents`;
+
     ELSEIF _query_type ='update' THEN
-        UPDATE `super_agent` SET  
+        UPDATE `super_agents` SET  
             name = IFNULL(_name,name),
             phone = IFNULL(_phone,phone),
             email = IFNULL(_email,email),
@@ -845,7 +849,7 @@ BEGIN
         WHERE id = _id;
 
     END IF;
-END$$
+END $$
 DELIMITER ;
 
 DELIMITER $$

@@ -1,4 +1,4 @@
-// const bcrypt = require ('bcryptjs';)
+const bcrypt = require('bcryptjs')
 const db = require('../models');
 const User = db.User;
 
@@ -15,7 +15,6 @@ module.exports.superAgent = async (req, res) => {
     state = null,
     lga = null,
     nin = null,
-    dob = null,
     password = null
   } = req.body;
 
@@ -37,7 +36,6 @@ module.exports.superAgent = async (req, res) => {
             :state,
             :lga,
             :nin,
-            :dob,
             :password)`,
       {
         replacements: {
@@ -51,7 +49,6 @@ module.exports.superAgent = async (req, res) => {
           state,
           lga,
           nin,
-          dob,
           password: hashedPassword
         },
       }
@@ -83,7 +80,6 @@ module.exports.fetchSuperAgent = async (req, res) => {
     state = null,
     lga = null,
     nin = null,
-    dob = null,
     password = null
   } = req.query;
 
@@ -99,7 +95,6 @@ module.exports.fetchSuperAgent = async (req, res) => {
             :state,
             :lga,
             :nin,
-            :dob,
             :password)`,
       {
         replacements: {
@@ -113,14 +108,13 @@ module.exports.fetchSuperAgent = async (req, res) => {
           state,
           lga,
           nin,
-          dob,
           password
         },
       }
     );
 
 
-    res.status(200).json({ success: true, results: resp });
+    res.json({ success: true, results: resp });
   } catch (err) {
     console.error(err);
     res
