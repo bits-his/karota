@@ -1,9 +1,8 @@
 "use strict";
 
 var _require = require("../controllers/payment"),
-    payment = _require.payment,
-    getPayment = _require.getPayment;
-
+  payment = _require.payment,
+  getPayment = _require.getPayment;
 var config = require("../config/config");
 // const { payment } = require("../controllers/payment");
 

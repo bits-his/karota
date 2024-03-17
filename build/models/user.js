@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 module.exports = function (sequelize, DataTypes) {
   var User = sequelize.define('User', {
@@ -13,9 +13,7 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     tableName: 'users'
   });
-
   User.associate = function (models) {};
-
   return User;
 };
 //# sourceMappingURL=user.js.map

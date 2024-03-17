@@ -1,9 +1,8 @@
-'use strict';
+"use strict";
 
 var _require = require("../controllers/vehicle_top_up"),
-    createTopUp = _require.createTopUp,
-    fetchTopUp = _require.fetchTopUp;
-
+  createTopUp = _require.createTopUp,
+  fetchTopUp = _require.fetchTopUp;
 module.exports = function (app) {
   // create a new agent
   app.post('/top-up/create', createTopUp);

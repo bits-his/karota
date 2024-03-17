@@ -1,10 +1,9 @@
-'use strict';
+"use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+var _typeof2 = _interopRequireDefault(require("@babel/runtime/helpers/typeof"));
 var isEmpty = function isEmpty(value) {
-  return value === undefined || value === null || (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' && Object.keys(value).length === 0 || typeof value === 'string' && value.trim().length === 0;
+  return value === undefined || value === null || (0, _typeof2["default"])(value) === 'object' && Object.keys(value).length === 0 || typeof value === 'string' && value.trim().length === 0;
 };
-
 module.exports = isEmpty;
 //# sourceMappingURL=isEmpty.js.map
