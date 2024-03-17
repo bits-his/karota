@@ -1,5 +1,5 @@
 
-const { superAgent, fetchSuperAgent } = require("../controllers/super_agent");
+const { superAgent, fetchSuperAgent } = require("../controllers/super_agents");
 
 module.exports = (app) => {
   // create a new superagent
@@ -10,9 +10,6 @@ module.exports = (app) => {
 
     app.get('/superagent'
     ,fetchSuperAgent);
-
-
-
 }
 
 

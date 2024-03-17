@@ -1,5 +1,5 @@
 
-const { createVendor, getVendors } = require("../controllers/vendor");
+const { createVendor, getVendors } = require("../controllers/vendors");
 
 module.exports = (app) => {
   // create a new vendor
@@ -10,6 +10,4 @@ module.exports = (app) => {
   // select all vendors from the database.
   app.get('/vendors',
     getVendors);
-
-
 };

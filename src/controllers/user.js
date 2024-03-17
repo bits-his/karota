@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
 const db = require('../models');
 const User = db.User;
+require('dotenv').config();
 
 // load input validation
 const validateRegisterForm = require('../validation/register');
@@ -16,7 +17,7 @@ module.exports.create = (req, res) => {
     username,
     account_type,
     email,
-    phone_no,
+    phone,
     password,
     status,
     role,
@@ -36,7 +37,7 @@ module.exports.create = (req, res) => {
         username,
         account_type,
         email,
-        phone_no,
+        phone,
         password,
         status,
         role,
@@ -97,7 +98,7 @@ module.exports.login = (req, res) => {
             const payload = { id, username }; //jwt payload
             // console.log(payload)
 
-            jwt.sign(payload, 'secret', {
+            jwt.sign(payload, process.env.JWT_SECRET_KEY, {
               expiresIn: 3600
             }, (err, token) => {
               res.json({
@@ -178,11 +179,11 @@ module.exports.verifyToken = async function (req, res) {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    const { email } = decoded;
+    const { id } = decoded;
 
     const user = await db.User.findOne({
       where: {
-        email,
+        id,
       },
     });
 
