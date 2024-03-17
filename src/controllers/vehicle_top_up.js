@@ -1,42 +1,35 @@
 // const bcrypt = require ('bcryptjs';)
 const db = require('../models');
+const moment = require('moment')
 
-module.exports.createAgent = async (req, res) => {
-  const {
-    query_type = 'insert',
-    id = null,
-    name = null,
-    phone = null,
-    email = null,
-    address = null,
-    super_agent = null,
-    state = null,
-    lga = null
-  } = req.body;
-
+module.exports.createTopUp = async (req, res) => {
+   const {
+     agent_id = null,
+     vehicle_id = null,
+     amount =null,
+     t_date = null,
+     created_at=null,
+     updated_at=null
+    } = req.body;
+ console.log(req.body)
   try {
     const resp = await db.sequelize.query(
-      `CALL agents(
-      :query_type,
-      :id,
-      :name,
-      :phone,
-      :email,
-      :address,
-      :super_agent,
-      :state,
-      :lga)`,
+      `CALL vehicle_top_up(
+      :agent_id,
+      :amount,
+      :t_date,
+      :created_at,
+      :updated_at,
+      :vehicle_id
+     )`,
       {
         replacements: {
-          query_type,
-          id,
-          name,
-          phone,
-          email,
-          address,
-          super_agent,
-          state,
-          lga
+          agent_id,
+          amount,
+          t_date:moment().format('YYYY-MM-DD'),
+          created_at,
+          updated_at,
+          vehicle_id
         }
       }
     );
@@ -50,42 +43,30 @@ module.exports.createAgent = async (req, res) => {
 
 //  @ Get all superagent
 //  @route GET /superagent 
-module.exports.fetchAgent = async (req, res) => {
+module.exports.fetchTopUp = async (req, res) => {
   const {
-    query_type = 'select',
     id = null,
     name = null,
-    phone = null,
-    email = null,
-    address = null,
+
     super_agent = null,
-    state = null,
-    lga = null
+
   } = req.query;
 
   try {
     const resp = await db.sequelize.query(
       `CALL agents(
-      :query_type,
       :id,
       :name,
-      :phone,
-      :email,
-      :address,
       :super_agent,
-      :state,
-      :lga)`,
+      )`,
       {
         replacements: {
           query_type,
           id,
           name,
-          phone,
-          email,
-          address,
+       
           super_agent,
-          state,
-          lga
+         
         }
       }
     );
