@@ -8,14 +8,12 @@ require('dotenv').config();
 const basename = path.basename(__filename);
 
 const config = {
-  username: "root",
-  password: "",
-  database: "karota",
-  host: "localhost",
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  host: process.env.DB_HOST,
+  port:3307,
   dialect: "mysql",
-  dialectOptions: {
-    insecureAuth: true, 
-  },
   pool: {
     max: 5,
     min: 0,
