@@ -8,11 +8,12 @@ module.exports.registerVehicle = async (req, res) => {
     owner_id = null,
     lg_reg_no = null,
     engine_no = null,
+    chasis_no =null,
     plate_no = null,
-    manifacturer = null,
-    manifacturing_date = null,
+    manufacturer = null,
+    manufacturing_date = null,
     purchased_date = null,
-    state_registrered = null,
+    state_registered = null,
     registered_lg = null,
   } = req.body;
 
@@ -24,11 +25,12 @@ module.exports.registerVehicle = async (req, res) => {
        :owner_id, 
        :lg_reg_no,
         :engine_no, 
+        :chasis_no,
        :plate_no, 
-       :manifacturer,
-        :manifacturing_date,
+       :manufacturer,
+        :manufacturing_date,
         :purchased_date, 
-       :state_registrered,
+       :state_registered,
         :registered_lg)`,
       {
         replacements: {
@@ -37,11 +39,12 @@ module.exports.registerVehicle = async (req, res) => {
           owner_id,
           lg_reg_no,
           engine_no,
+          chasis_no,
           plate_no,
-          manifacturer,
-          manifacturing_date,
+          manufacturer,
+          manufacturing_date,
           purchased_date,
-          state_registrered,
+          state_registered,
           registered_lg
         }
       }
@@ -63,11 +66,12 @@ module.exports.getRegVehicles = async (req, res) => {
     owner_id = null,
     lg_reg_no = null,
     engine_no = null,
+    chasis_no =null,
     plate_no = null,
-    manifacturer = null,
-    manifacturing_date = null,
+    manufacturer = null,
+    manufacturing_date = null,
     purchased_date = null,
-    state_registrered = null,
+    state_registered = null,
     registered_lg = null,
   } = req.query;
 
@@ -78,12 +82,13 @@ module.exports.getRegVehicles = async (req, res) => {
         :id, 
        :owner_id, 
        :lg_reg_no,
-        :engine_no, 
+        :engine_no,
+        :chasis_no, 
        :plate_no, 
-       :manifacturer,
-        :manifacturing_date,
+       :manufacturer,
+        :manufacturing_date,
         :purchased_date, 
-       :state_registrered,
+       :state_registered,
         :registered_lg)`,
       {
         replacements: {
@@ -92,11 +97,12 @@ module.exports.getRegVehicles = async (req, res) => {
           owner_id,
           lg_reg_no,
           engine_no,
+          chasis_no,
           plate_no,
-          manifacturer,
-          manifacturing_date,
+          manufacturer,
+          manufacturing_date,
           purchased_date,
-          state_registrered,
+          state_registered,
           registered_lg
         }
       }
