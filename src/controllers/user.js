@@ -1,9 +1,9 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const passport = require('passport');
-
+const { Op } = require('sequelize');
 const db = require('../models');
 const User = db.User;
+require('dotenv').config();
 
 // load input validation
 const validateRegisterForm = require('../validation/register');
@@ -17,7 +17,7 @@ module.exports.create = (req, res) => {
     username,
     account_type,
     email,
-    phone_no,
+    phone,
     password,
     status,
     role,
@@ -37,7 +37,7 @@ module.exports.create = (req, res) => {
         username,
         account_type,
         email,
-        phone_no,
+        phone,
         password,
         status,
         role,
@@ -67,11 +67,14 @@ module.exports.login = (req, res) => {
     return res.status(400).json(errors);
   }
 
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   User.findAll({
     where: {
-      email
+      [Op.or]: [
+        { email: username },
+        { phone: username }
+      ]
     }
   })
     .then(user => {
@@ -95,7 +98,7 @@ module.exports.login = (req, res) => {
             const payload = { id, username }; //jwt payload
             // console.log(payload)
 
-            jwt.sign(payload, 'secret', {
+            jwt.sign(payload, process.env.JWT_SECRET_KEY, {
               expiresIn: 3600
             }, (err, token) => {
               res.json({
@@ -159,4 +162,52 @@ module.exports.deleteUser = (req, res) => {
   User.destroy({ where: { id } })
     .then(() => res.status.json({ msg: 'User has been deleted successfully!' }))
     .catch(err => res.status(500).json({ msg: 'Failed to delete!' }));
+};
+
+
+module.exports.verifyToken = async function (req, res) {
+  const authToken = req.headers["authorization"];
+
+  if (!authToken || !authToken.startsWith("Bearer ")) {
+    return res.status(401).json({
+      success: false,
+      msg: "Invalid or missing token",
+    });
+  }
+
+  const token = authToken.slice(7); // Remove "Bearer " from the token string
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const { id } = decoded;
+
+    const user = await db.User.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: "User not found",
+      });
+    }
+
+    const profile = await db.sequelize.query(
+      `SELECT * FROM ${user.role}s WHERE user_id=${user.id}`
+    );
+
+    res.json({
+      success: true,
+      user,
+      profile: profile[0],
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(401).json({
+      success: false,
+      msg: "Failed to authenticate token",
+    });
+  }
 };

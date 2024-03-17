@@ -2,7 +2,7 @@ const passport = require('passport');
 const config = require('../config/config');
 const { allowOnly } = require('../services/routesHelper');
 const { create, login, findAllUsers,
-  findById, update, deleteUser
+  findById, update, deleteUser, verifyToken
 } = require('../controllers/user');
 
 module.exports = (app) => {
@@ -49,5 +49,9 @@ module.exports = (app) => {
     }),
     allowOnly(config.accessLevels.admin, deleteUser)
   );
-
+  app.get(
+    "/verify-token",
+    passport.authenticate("jwt", { session: false }),
+    verifyToken
+  );
 };
