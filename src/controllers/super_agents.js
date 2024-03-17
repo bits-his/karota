@@ -14,17 +14,12 @@ module.exports.superAgent = async (req, res) => {
     vendor = null,
     state = null,
     lga = null,
-    nin = null,
-    password = null
+    nin = null
   } = req.body;
+  console.log(req.body)
 
-  if (!password) {
-    return res.status(400).json({ success: false, error: 'Password is required' });
-  }
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     const resp = await db.sequelize.query(
       `CALL super_agents(:query_type, 
         :id, 
@@ -35,8 +30,7 @@ module.exports.superAgent = async (req, res) => {
             :vendor,
             :state,
             :lga,
-            :nin,
-            :password)`,
+            :nin)`,
       {
         replacements: {
           query_type,
@@ -48,8 +42,7 @@ module.exports.superAgent = async (req, res) => {
           vendor,
           state,
           lga,
-          nin,
-          password: hashedPassword
+          nin
         },
       }
     );
@@ -70,7 +63,7 @@ module.exports.superAgent = async (req, res) => {
 //   @route GET /api/superagent/:id
 module.exports.fetchSuperAgent = async (req, res) => {
   const {
-    query_type = "insert",
+    query_type = "select_all",
     id = null,
     name = null,
     phone = null,
@@ -79,8 +72,7 @@ module.exports.fetchSuperAgent = async (req, res) => {
     vendor = null,
     state = null,
     lga = null,
-    nin = null,
-    password = null
+    nin = null
   } = req.query;
 
   try {
@@ -94,8 +86,7 @@ module.exports.fetchSuperAgent = async (req, res) => {
             :vendor,
             :state,
             :lga,
-            :nin,
-            :password)`,
+            :nin)`,
       {
         replacements: {
           query_type,
@@ -107,8 +98,7 @@ module.exports.fetchSuperAgent = async (req, res) => {
           vendor,
           state,
           lga,
-          nin,
-          password
+          nin
         },
       }
     );
