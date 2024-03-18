@@ -405,7 +405,6 @@ CREATE PROCEDURE `vehicle_owners`(
     IN p_email VARCHAR(255),
     IN p_state VARCHAR(100),
     IN p_lga VARCHAR(100),
-    IN p_dob DATE,
     IN p_password VARCHAR(255)
 )
 BEGIN
@@ -415,7 +414,7 @@ IF query_type ='insert' THEN
         `username`, 
         `account_type`, 
         `email`, 
-        `phone_no`, 
+        `phone`, 
         `status`, 
         `role`,
         `password`) 
@@ -1128,6 +1127,24 @@ BEGIN
         DELETE FROM `agents`
         WHERE id = _id;
 
+    END IF;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `dashboard_cards`(IN `query_type` VARCHAR(50))
+BEGIN 
+    DECLARE super_agents_count, vendors_count, vehicles_count, agents_count INT;
+
+    IF query_type = 'cards-counts' THEN
+        SELECT COUNT(*) INTO super_agents_count FROM super_agents;
+        SELECT COUNT(*) INTO vendors_count FROM vendors;
+        SELECT COUNT(*) INTO vehicles_count FROM vehicle_registration;
+        SELECT COUNT(*) INTO agents_count FROM agents;
+        SELECT super_agents_count AS super_agents_count, 
+               vendors_count AS vendors_count, 
+               vehicles_count AS vehicles_count, 
+               agents_count AS agents_count;
     END IF;
 END$$
 DELIMITER ;

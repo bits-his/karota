@@ -14,7 +14,7 @@ module.exports.saveVehicleOwners = (req, res) => {
         lga = null,
         password = null,
     } = req.body
-    db.sequelize.query(`CALL vehicles_owners(
+    db.sequelize.query(`CALL vehicle_owners(
             :query_type,
             :id,
             :user_id,
@@ -64,7 +64,7 @@ module.exports.getVehicleOwners = (req, res) => {
         lga = null,
         password = null,
     } = req.body
-    db.sequelize.query(`CALL vehicles_owners(
+    db.sequelize.query(`CALL vehicle_owners(
             :query_type,
             :id,
             :user_id,
@@ -73,10 +73,11 @@ module.exports.getVehicleOwners = (req, res) => {
             :phone,
             :email,
             :state,
-            :lga
+            :lga,
+            :password
         )`, {
         replacements: {
-            query_type, 
+            query_type,
             id,
             user_id,
             name,
@@ -85,6 +86,7 @@ module.exports.getVehicleOwners = (req, res) => {
             email,
             state,
             lga,
+            password
         }
     })
         .then((resp) => {
