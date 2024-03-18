@@ -33,7 +33,27 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 //default route
+<<<<<<< HEAD
+app.get('/', (req, res) => res.send('Hello my World'));
+
+require('./routes/user.js')(app);
+require('./routes/create_user.js')(app);
+require('./routes/incedent.js')(app);
+require('./routes/payment.js')(app);
+require('./routes/vendors.js')(app);
+require('./routes/vehicles_registration.js')(app);
+require('./routes/drivers.js')(app);
+require('./routes/super_agents.js')(app);
+require('./routes/agents.js')(app);
+require('./routes/vehicle_owners.js')(app);
+require('./routes/vehicle_top_up.js')(app);
+require('./routes/dashboard_queries.js')(app);
+
+
+
+=======
 app.get("/", (req, res) => res.send("Hello my World"));
+>>>>>>> 6353c19d4c5b6a2924181575e4a33565305e8326
 
 require("./routes/user.js")(app);
 require("./routes/create_user.js")(app);

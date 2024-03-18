@@ -4,39 +4,36 @@ const db = require('../models');
 module.exports.saveVehicleOwners = (req, res) => {
     const {
         query_type = null,
-        id = null,
-        user_id = null,
         name = null,
         address = null,
         phone = null,
         email = null,
         state = null,
         lga = null,
-        password = null,
+        user_id = null
+    
     } = req.body
     db.sequelize.query(`CALL vehicle_owners(
             :query_type,
-            :id,
             :user_id,
             :name,
             :address,
-            phone,
+            :phone,
             :email,
             :state,
-            :lga,
-            :password
+            :lga
+            
         )`, {
         replacements: {
             query_type,
-            id,
             user_id,
             name,
             address,
             phone,
             email,
             state,
-            lga,
-            password,
+            lga
+             
         }
     })
         .then((resp) => {
@@ -62,11 +59,9 @@ module.exports.getVehicleOwners = (req, res) => {
         email = null,
         state = null,
         lga = null,
-        password = null,
     } = req.body
     db.sequelize.query(`CALL vehicle_owners(
             :query_type,
-            :id,
             :user_id,
             :name,
             :address,
