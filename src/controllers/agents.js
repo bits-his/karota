@@ -13,7 +13,7 @@ module.exports.createAgent = async (req, res) => {
     state = null,
     lga = null
   } = req.body;
-
+console.log(req.body)
   try {
     const resp = await db.sequelize.query(
       `CALL agents(
