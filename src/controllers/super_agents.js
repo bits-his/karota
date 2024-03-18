@@ -21,7 +21,7 @@ module.exports.superAgent = async (req, res) => {
 
   try {
     const resp = await db.sequelize.query(
-      `CALL super_agents(:query_type, 
+      `CALL super_agent(:query_type, 
         :id, 
         :name,
             :phone,
@@ -109,6 +109,6 @@ module.exports.fetchSuperAgent = async (req, res) => {
     console.error(err);
     res
       .status(500)
-      .json({ success: false, error: "Failed to register super agent" });
+      .json({ success: false, error: "Failed to fetch super agent" });
   }
 }
