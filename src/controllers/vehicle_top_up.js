@@ -37,7 +37,7 @@ module.exports.createTopUp = async (req, res) => {
     res.status(200).json({ success: true, results: resp });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, error: 'Failed to fetch agent' });
+    res.status(500).json({ success: false, error: 'Failed to create topup' });
   }
 };
 
@@ -74,6 +74,6 @@ module.exports.fetchTopUp = async (req, res) => {
     res.status(200).json({ success: true, results: resp });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, error: 'Failed to fetch agent' });
+    res.status(500).json({ success: false, error: 'Failed to fetch vehicle topup' });
   }
 };
