@@ -6,10 +6,8 @@ module.exports.createTopUp = async (req, res) => {
    const {
      agent_id = null,
      vehicle_id = null,
-     amount =null,
-     t_date = null,
-     created_at=null,
-     updated_at=null
+     amount =null
+ 
     } = req.body;
  console.log(req.body)
   try {
@@ -18,8 +16,7 @@ module.exports.createTopUp = async (req, res) => {
       :agent_id,
       :amount,
       :t_date,
-      :created_at,
-      :updated_at,
+    
       :vehicle_id
      )`,
       {
@@ -27,8 +24,6 @@ module.exports.createTopUp = async (req, res) => {
           agent_id,
           amount,
           t_date:moment().format('YYYY-MM-DD'),
-          created_at,
-          updated_at,
           vehicle_id
         }
       }
