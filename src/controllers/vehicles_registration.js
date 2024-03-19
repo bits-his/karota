@@ -21,7 +21,6 @@ module.exports.registerVehicle = async (req, res) => {
   } = req.body;
 
   try {
-    console.log("SSSSSSSSSSSSSSSSSSSSSSSSSADIQ",req.body)
     const resp = await db.sequelize.query(
       `CALL vehicles(
         :query_type,  
@@ -56,7 +55,7 @@ module.exports.registerVehicle = async (req, res) => {
           registered_lg,
           balance,
           color,
-          expiry_date 
+          expiry_date
         }
       }
     );
