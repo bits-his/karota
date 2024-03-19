@@ -8,30 +8,38 @@ module.exports.registerVehicle = async (req, res) => {
     owner_id = null,
     lg_reg_no = null,
     engine_no = null,
-    chasis_no = null,
     plate_no = null,
-    manufacturer = null,
-    manufacturing_date = null,
-    purchased_date = null,
+    pin = null,
+    vehicle_make = null,
+    vehicle_model = null,
     state_registered = null,
+    purchased_date = null,
     registered_lg = null,
+    balance = null,
+    color = null,
+    expiry_date = null,
   } = req.body;
 
   try {
+    console.log("SSSSSSSSSSSSSSSSSSSSSSSSSADIQ",req.body)
     const resp = await db.sequelize.query(
       `CALL vehicles(
         :query_type,  
         :id, 
-       :owner_id, 
-       :lg_reg_no,
+        :owner_id, 
+        :lg_reg_no,
         :engine_no, 
-        :chasis_no,
-       :plate_no, 
-       :manufacturer,
-        :manufacturing_date,
-        :purchased_date, 
-       :state_registered,
-        :registered_lg)`,
+        :plate_no,
+        :pin, 
+        :vehicle_make,
+        :vehicle_model,
+        :state_registered,
+        :purchased_date,
+        :registered_lg,
+        :balance,
+        :color,
+        :expiry_date
+      )`,
       {
         replacements: {
           query_type,
@@ -39,13 +47,16 @@ module.exports.registerVehicle = async (req, res) => {
           owner_id,
           lg_reg_no,
           engine_no,
-          chasis_no,
           plate_no,
-          manufacturer,
-          manufacturing_date,
-          purchased_date,
+          pin,
+          vehicle_make,
+          vehicle_model,
           state_registered,
-          registered_lg
+          purchased_date,
+          registered_lg,
+          balance,
+          color,
+          expiry_date 
         }
       }
     );
@@ -57,8 +68,7 @@ module.exports.registerVehicle = async (req, res) => {
   }
 };
 
-//  @ Get all vendors
-//  @route GET /vendors 
+// Get all registered vehicles
 module.exports.getRegVehicles = async (req, res) => {
   const {
     query_type = 'select',
@@ -66,30 +76,37 @@ module.exports.getRegVehicles = async (req, res) => {
     owner_id = null,
     lg_reg_no = null,
     engine_no = null,
-    chasis_no = null,
     plate_no = null,
-    manufacturer = null,
-    manufacturing_date = null,
-    purchased_date = null,
+    pin = null,
+    vehicle_make = null,
+    vehicle_model = null,
     state_registered = null,
+    purchased_date = null,
     registered_lg = null,
+    balance = null,
+    color = null,
+    expiry_date = null,
   } = req.query;
 
   try {
     const resp = await db.sequelize.query(
       `CALL vehicles(
         :query_type,  
-        :vehicle_id, 
-       :owner_id, 
-       :lg_reg_no,
+        :id, 
+        :owner_id, 
+        :lg_reg_no,
         :engine_no,
-        :chasis_no, 
-       :plate_no, 
-       :manufacturer,
-        :manufacturing_date,
-        :purchased_date, 
-       :state_registered,
-        :registered_lg)`,
+        :plate_no, 
+        :pin,
+        :vehicle_make,
+        :vehicle_model,
+        :state_registered,
+        :purchased_date,
+        :registered_lg,
+        :balance,
+        :color,
+        :expiry_date
+      )`,
       {
         replacements: {
           query_type,
@@ -97,13 +114,16 @@ module.exports.getRegVehicles = async (req, res) => {
           owner_id,
           lg_reg_no,
           engine_no,
-          chasis_no,
           plate_no,
-          manufacturer,
-          manufacturing_date,
-          purchased_date,
+          pin,
+          vehicle_make,
+          vehicle_model,
           state_registered,
-          registered_lg
+          purchased_date,
+          registered_lg,
+          balance,
+          color,
+          expiry_date
         }
       }
     );
@@ -111,17 +131,6 @@ module.exports.getRegVehicles = async (req, res) => {
     res.status(200).json({ success: true, data: resp });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, error: 'Failed to fetch vehicle' });
+    res.status(500).json({ success: false, error: 'Unable to fetch vehicle' });
   }
-
 };
-
-//       }
-//       res.json({ user })
-//     })
-//     .catch(err => res.status(500).json({ err }));
-// };
-
-
-
-
