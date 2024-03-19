@@ -1148,3 +1148,110 @@ BEGIN
     END IF;
 END$$
 DELIMITER ;
+
+
+
+-- 19/03/2024
+
+RENAME TABLE vehicle_owner TO vehicle_owners;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `vehicle_owners`$$
+CREATE  PROCEDURE `vehicle_owners`(IN `query_type` VARCHAR(255), IN `p_user_id` INT, IN `p_name` VARCHAR(255), IN `p_address` VARCHAR(255), IN `p_phone` VARCHAR(20), IN `p_email` VARCHAR(255), IN `p_state` VARCHAR(100), IN `p_lga` VARCHAR(100), IN `p_password` VARCHAR(255))
+BEGIN
+IF query_type ='insert' THEN
+      INSERT INTO `users`(
+        `name`, 
+        `username`, 
+        `account_type`, 
+        `email`, 
+        `phone_no`, 
+        `status`, 
+        `role`,
+        `password`) 
+	VALUES(
+        p_name, 
+        p_name, 
+        'vehicle',
+        p_email,
+        p_phone, 
+        'active', 
+        'user',
+        p_password );
+    INSERT INTO `vehicle_owners`(
+        `user_id`,
+        `name`,
+        `address`,
+        `phone`,
+        `email`,
+        `state`,
+        `lga`,
+        `dob`,
+        `user_id`
+    ) VALUES (
+        LAST_INSERT_ID(),
+        p_name,
+        p_address,
+        p_phone,
+        p_email,
+        p_state,
+        p_lga,
+        p_dob,
+        p_user_id
+    );
+     ELSEIF query_type ='select' THEN
+        SELECT * FROM `vehicle_owners` WHERE  id=p_user_id;
+    ELSEIF query_type ='select-all' THEN
+        SELECT * FROM `vehicle_owners`;
+    ELSEIF query_type ='search' THEN
+        SELECT * FROM `vehicle_owners`
+        WHERE phone LIKE CONCAT('%',p_phone,'%') OR email  LIKE CONCAT('%',p_email,'%')  OR name  LIKE CONCAT('%',p_name,'%') ;
+    END IF;
+    
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `vehicles`$$
+CREATE  PROCEDURE `vehicles`(
+    IN `_query_type` VARCHAR(10), 
+IN `_id` INT(9), 
+IN `_owner_id` INT(9), 
+IN `_lg_reg_no` VARCHAR(50), 
+IN `_engine_no` VARCHAR(50), 
+IN `_chasis_no` VARCHAR(50), 
+IN `_plate_no` VARCHAR(50), 
+IN `_manifacturer` VARCHAR(50), 
+IN `_manifacturing_date` DATE, 
+IN `_purchased_date` DATE, 
+IN `_state_registrered` VARCHAR(50), 
+IN `_registered_lg` VARCHAR(50))
+BEGIN
+	
+    IF _query_type = 'insert' THEN
+  INSERT INTO `vehicle_registration`(`owner_id`, `lg_reg_no`, `manifacturer`, `manifacturing_date`, `engine_no`, `plate_no`, `state_registrered`, `purchased_date`, `registered_lg`) 
+    VALUES (
+        _owner_id,
+        _lg_reg_no,
+        _manifacturer,
+        _manifacturing_date,
+        _engine_no,
+        _plate_no,
+        _state_registrered,
+        _purchased_date,
+        _state_registrered,
+        _purchased_date,
+        _registered_lg
+    );   
+     ELSEIF _query_type ='select' THEN
+        SELECT * FROM `vehicle_registration`
+        WHERE vehicle_id=_id;
+    ELSEIF _query_type ='select-all' THEN
+        SELECT * FROM `vehicle_registration`;
+    ELSEIF _query_type ='search' THEN
+        SELECT * FROM `vehicle_registration`
+        WHERE lg_reg_no LIKE CONCAT('%',_lg_reg_no,'%') OR engine_no  LIKE CONCAT('%',_engine_no,'%')  OR plate_no  LIKE CONCAT('%',_plate_no,'%') ;
+    
+        END IF;
+        END$$
+DELIMITER ;

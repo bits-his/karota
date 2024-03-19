@@ -8,7 +8,7 @@ module.exports.registerVehicle = async (req, res) => {
     owner_id = null,
     lg_reg_no = null,
     engine_no = null,
-    chasis_no =null,
+    chasis_no = null,
     plate_no = null,
     manufacturer = null,
     manufacturing_date = null,
@@ -62,11 +62,11 @@ module.exports.registerVehicle = async (req, res) => {
 module.exports.getRegVehicles = async (req, res) => {
   const {
     query_type = 'select',
-    id = null,
+    vehicle_id = null,
     owner_id = null,
     lg_reg_no = null,
     engine_no = null,
-    chasis_no =null,
+    chasis_no = null,
     plate_no = null,
     manufacturer = null,
     manufacturing_date = null,
@@ -79,7 +79,7 @@ module.exports.getRegVehicles = async (req, res) => {
     const resp = await db.sequelize.query(
       `CALL vehicles(
         :query_type,  
-        :id, 
+        :vehicle_id, 
        :owner_id, 
        :lg_reg_no,
         :engine_no,
@@ -93,7 +93,7 @@ module.exports.getRegVehicles = async (req, res) => {
       {
         replacements: {
           query_type,
-          id,
+          vehicle_id,
           owner_id,
           lg_reg_no,
           engine_no,

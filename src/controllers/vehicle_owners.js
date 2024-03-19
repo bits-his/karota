@@ -11,7 +11,7 @@ module.exports.saveVehicleOwners = (req, res) => {
         state = null,
         lga = null,
         user_id = null
-    
+
     } = req.body
     db.sequelize.query(`CALL vehicle_owners(
             :query_type,
@@ -33,7 +33,7 @@ module.exports.saveVehicleOwners = (req, res) => {
             email,
             state,
             lga
-             
+
         }
     })
         .then((resp) => {
@@ -59,7 +59,8 @@ module.exports.getVehicleOwners = (req, res) => {
         email = null,
         state = null,
         lga = null,
-    } = req.body
+        password = null
+    } = req.query
     db.sequelize.query(`CALL vehicle_owners(
             :query_type,
             :user_id,
