@@ -81,13 +81,14 @@ module.exports.login = (req, res) => {
 
       //check for user
       if (!user.length) {
-        errors.email = 'User not found!';
+        errors.username = 'User not found!';
         return res.status(404).json(errors);
       }
 
       let originalPassword = user[0].dataValues.password
 
       //check for password
+      console.log({ password, originalPassword });
       bcrypt
         .compare(password, originalPassword)
         .then(isMatch => {
