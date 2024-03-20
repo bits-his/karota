@@ -1255,3 +1255,6 @@ BEGIN
         END IF;
         END$$
 DELIMITER ;
+
+
+ALTER TABLE vehicle_registration CHANGE state_registrered state_registered VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL;
