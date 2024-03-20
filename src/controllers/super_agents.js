@@ -21,7 +21,7 @@ module.exports.superAgent = async (req, res) => {
 
   try {
     const resp = await db.sequelize.query(
-      `CALL super_agent(:query_type, 
+      `CALL super_agents(:query_type, 
         :id, 
         :name,
             :phone,

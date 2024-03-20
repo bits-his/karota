@@ -11,7 +11,8 @@ module.exports.createAgent = async (req, res) => {
     address = null,
     super_agent = null,
     state = null,
-    lga = null
+    lga = null,
+    service_location = null
   } = req.body;
 console.log(req.body)
   try {
@@ -25,9 +26,10 @@ console.log(req.body)
       :address,
       :super_agent,
       :state,
-      :lga)`,
+      :lga,
+      :service_location)`,
       {
-        replacements: {
+        replacements: { 
           query_type,
           id,
           name,
@@ -36,7 +38,8 @@ console.log(req.body)
           address,
           super_agent,
           state,
-          lga
+          lga,
+          service_location
         }
       }
     );
@@ -44,7 +47,7 @@ console.log(req.body)
     res.status(200).json({ success: true, results: resp });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, error: 'Failed to fetch agent' });
+    res.status(500).json({ success: false, error: 'Failed to create agent' });
   }
 };
 
@@ -60,7 +63,8 @@ module.exports.fetchAgent = async (req, res) => {
     address = null,
     super_agent = null,
     state = null,
-    lga = null
+    lga = null,
+    service_location = null
   } = req.query;
 
   try {
@@ -74,7 +78,8 @@ module.exports.fetchAgent = async (req, res) => {
       :address,
       :super_agent,
       :state,
-      :lga)`,
+      :lga,
+      :service_location)`,
       {
         replacements: {
           query_type,
@@ -85,7 +90,8 @@ module.exports.fetchAgent = async (req, res) => {
           address,
           super_agent,
           state,
-          lga
+          lga,
+          service_location
         }
       }
     );
