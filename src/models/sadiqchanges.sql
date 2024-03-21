@@ -233,7 +233,7 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `super_agent`(IN `_query_type` VARCHAR(10), IN `_id` INT, IN `_name` VARCHAR(50), IN `_phone` VARCHAR(50), IN `_email` VARCHAR(50), IN `_address` VARCHAR(50), IN `_vendor` INT, IN `_state` VARCHAR(50), IN `_lga` VARCHAR(100), IN `_nin` VARCHAR(15), IN `_dob` DATE)
+CREATE  PROCEDURE `super_agent`(IN `_query_type` VARCHAR(10), IN `_id` INT, IN `_name` VARCHAR(50), IN `_phone` VARCHAR(50), IN `_email` VARCHAR(50), IN `_address` VARCHAR(50), IN `_vendor` INT, IN `_state` VARCHAR(50), IN `_lga` VARCHAR(100), IN `_nin` VARCHAR(15), IN `_dob` DATE)
 BEGIN
     IF _query_type = 'insert' THEN
         INSERT INTO `super_agent` (
@@ -279,6 +279,55 @@ BEGIN
             id = _id;
     ELSEIF _query_type ='delete' THEN
         DELETE FROM agent
+        WHERE id = _id;
+
+    END IF;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE  PROCEDURE super_agents(IN query_type VARCHAR(10), IN _id INT, IN _name VARCHAR(50), IN _phone VARCHAR(50), IN _email VARCHAR(50), IN _address VARCHAR(50), IN _vendor INT, IN _state VARCHAR(50), IN _lga VARCHAR(100), IN _nin VARCHAR(15))
+BEGIN
+    IF query_type = 'insert' THEN
+        INSERT INTO super_agents (
+            name,
+            phone,
+            email,
+            address,
+            vendor,
+            state,
+            lga,
+            nin
+        ) VALUES (
+            _name,
+            _phone,
+            _email,
+            _address,
+            _vendor,
+            _state,
+            _lga,
+_nin
+        );
+    ELSEIF query_type ='select' THEN
+        SELECT * FROM super_agents
+        WHERE id=_id;
+        ELSEIF query_type ='select-all' THEN
+        SELECT * FROM super_agents;
+    ELSEIF query_type ='search' THEN
+        SELECT * FROM super_agents;
+    ELSEIF query_type ='update' THEN
+        UPDATE super_agents SET  
+            name = IFNULL(_name,name),
+            phone = IFNULL(_phone,phone),
+            email = IFNULL(_email,email),
+            address = IFNULL(_address,address),
+            vendor = IFNULL(_vendor,vendor),
+            state = IFNULL(_state,lga),
+            lga = IFNULL(_lga,lga)
+        WHERE  
+            id = _id;
+    ELSEIF query_type ='delete' THEN
+        DELETE FROM agents
         WHERE id = _id;
 
     END IF;
