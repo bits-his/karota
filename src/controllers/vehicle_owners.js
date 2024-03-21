@@ -59,7 +59,7 @@ module.exports.getVehicleOwners = (req, res) => {
         email = null,
         state = null,
         lga = null,
-        password = null
+   
     } = req.query
     db.sequelize.query(`CALL vehicle_owners(
             :query_type,
@@ -69,8 +69,8 @@ module.exports.getVehicleOwners = (req, res) => {
             :phone,
             :email,
             :state,
-            :lga,
-            :password
+            :lga
+            
         )`, {
         replacements: {
             query_type,
@@ -81,8 +81,7 @@ module.exports.getVehicleOwners = (req, res) => {
             phone,
             email,
             state,
-            lga,
-            password
+            lga
         }
     })
         .then((resp) => {

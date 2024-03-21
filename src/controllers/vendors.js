@@ -123,7 +123,6 @@ module.exports.getVendors = async (req, res) => {
         :contact_name, 
         :contact_address, 
         :contact_state, 
-        :contact_password, 
         :contact_phone, 
         :contact_email, 
         :contact_lga, 
