@@ -47,6 +47,8 @@ require('./routes/agents.js')(app);
 require('./routes/vehicle_owners.js')(app);
 require('./routes/vehicle_top_up.js')(app);
 require('./routes/dashboard_queries.js')(app);
+require('./routes/super_agent_top.js')(app);
+require('./routes/agent_top_up.js')(app);
 
 // any routes not specified get sent here
 app.all("/*", function (req, res) {
