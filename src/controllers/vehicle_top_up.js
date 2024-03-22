@@ -3,13 +3,13 @@ const db = require('../models');
 const moment = require('moment')
 
 module.exports.createTopUp = async (req, res) => {
-   const {
-     agent_id = null,
-     vehicle_id = null,
-     amount =null
- 
-    } = req.body;
- console.log(req.body)
+  const {
+    agent_id = null,
+    vehicle_id = null,
+    amount = null
+
+  } = req.body;
+  console.log(req.body)
   try {
     const resp = await db.sequelize.query(
       `CALL vehicle_top_up(
@@ -22,7 +22,7 @@ module.exports.createTopUp = async (req, res) => {
         replacements: {
           agent_id,
           amount,
-          t_date:moment().format('YYYY-MM-DD'),
+          t_date: moment().format('YYYY-MM-DD'),
           vehicle_id
         }
       }
@@ -58,9 +58,9 @@ module.exports.fetchTopUp = async (req, res) => {
           query_type,
           id,
           name,
-       
+
           super_agent,
-         
+
         }
       }
     );
