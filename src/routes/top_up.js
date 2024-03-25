@@ -1,8 +1,8 @@
-const { createTopUp, fetchTopUp } = require("../controllers/super_agent_top");
+const { createTopUp, fetchTopUp } = require("../controllers/top_up");
 
 module.exports = (app) => {
   app.post(
-    '/super_agent/top-up/create',
+    '/top-up/create',
     createTopUp
   );
   app.get('/super_agent/top-up',
