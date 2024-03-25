@@ -24,12 +24,12 @@ module.exports.createVendor = async (req, res) => {
     vendor_id = null,
   } = req.body;
 
-  if (!contact_password) {
-    return res.status(400).json({ success: false, error: 'Contact password is required' });
-  }
+  // if (!contact_password) {
+  //   return res.status(400).json({ success: false, error: 'Contact password is required' });
+  // }
 
   try {
-    const hashedContactPassword = await bcrypt.hash(contact_password, 10);
+    // const hashedContactPassword = await bcrypt.hash(contact_password, 10);
 
     const resp = await db.sequelize.query(
       `CALL vendors(
@@ -50,8 +50,8 @@ module.exports.createVendor = async (req, res) => {
         :contact_password, 
         :contact_phone, 
         :contact_email, 
-        :contact_lga, 
-        :vendor_id)`,
+        :contact_lga)`,
+        // :vendor_id)`,
       {
         replacements: {
           query_type,
@@ -68,7 +68,7 @@ module.exports.createVendor = async (req, res) => {
           contact_name,
           contact_address,
           contact_state,
-          // contact_password: hashedContactPassword,
+          contact_password:'', // hashedContactPassword,
           contact_phone,
           contact_email,
           contact_lga,
