@@ -24,12 +24,12 @@ module.exports.createVendor = async (req, res) => {
     vendor_id = null,
   } = req.body;
 
-  if (!contact_password) {
-    return res.status(400).json({ success: false, error: 'Contact password is required' });
-  }
+  // if (!contact_password) {
+  //   return res.status(400).json({ success: false, error: 'Contact password is required' });
+  // }
 
   try {
-    const hashedContactPassword = await bcrypt.hash(contact_password, 10);
+    // const hashedContactPassword = await bcrypt.hash(contact_password, 10);
 
     const resp = await db.sequelize.query(
       `CALL vendors(
