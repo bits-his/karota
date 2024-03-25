@@ -50,8 +50,8 @@ module.exports.createVendor = async (req, res) => {
         :contact_password, 
         :contact_phone, 
         :contact_email, 
-        :contact_lga, 
-        :vendor_id)`,
+        :contact_lga)`,
+        // :vendor_id)`,
       {
         replacements: {
           query_type,
