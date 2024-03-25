@@ -9,13 +9,14 @@ module.exports.registerVehicle = async (req, res) => {
     lg_reg_no = null,
     engine_no = null,
     plate_no = null,
-    pin = null,
     vehicle_make = null,
     vehicle_model = null,
+    engine_capacity = null ,
+    chasis_no = null,
+    date_issued = null ,
     state_registered = null,
     purchased_date = null,
     registered_lg = null,
-    balance = null,
     color = null,
     expiry_date = null,
   } = req.body;
@@ -28,7 +29,11 @@ module.exports.registerVehicle = async (req, res) => {
         :lg_reg_no,
         :engine_no, 
         :plate_no,
+        :color,
+<<<<<<< HEAD
         :pin, 
+=======
+>>>>>>> a6a814372412cd42806bf8ad99380220ce756721
         :vehicle_make,
         :vehicle_model,
         :engine_capacity,
@@ -37,8 +42,10 @@ module.exports.registerVehicle = async (req, res) => {
         :purchased_date,
         :state_registered,
         :registered_lg,
+<<<<<<< HEAD
         :balance,
-        :color,
+=======
+>>>>>>> a6a814372412cd42806bf8ad99380220ce756721
         :expiry_date
       )`,
       {
