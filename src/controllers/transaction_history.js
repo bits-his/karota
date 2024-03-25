@@ -8,9 +8,9 @@ module.exports.fetchTH= (req, res) => {
         agent_id = null,
         super_agent_id = null,
         vendor_id = null
+    } = req.query
 
-
-    } = req.body
+    console.log(req.query)
     db.sequelize.query(`CALL transaction_history(
             :query_type,
             :vehicle_id,
