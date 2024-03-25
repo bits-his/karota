@@ -19,6 +19,7 @@ module.exports.registerVehicle = async (req, res) => {
     registered_lg = null,
     color = null,
     expiry_date = null,
+    balance =null
   } = req.body;
 
   try {
@@ -38,7 +39,8 @@ module.exports.registerVehicle = async (req, res) => {
         :purchased_date,
         :state_registered,
         :registered_lg,
-        :expiry_date
+        :expiry_date,
+        :balance
       )`,
       {
         replacements: {
@@ -57,7 +59,8 @@ module.exports.registerVehicle = async (req, res) => {
           purchased_date,
           state_registered,
           registered_lg,
-          expiry_date
+          expiry_date,
+          balance
         }
       }
     );
