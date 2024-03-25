@@ -47,7 +47,7 @@ require('./routes/agents.js')(app);
 require('./routes/vehicle_owners.js')(app);
 require('./routes/vehicle_top_up.js')(app);
 require('./routes/dashboard_queries.js')(app);
-require('./routes/super_agent_top.js')(app);
+require('./routes/top_up.js')(app);
 require('./routes/transaction_history.js')(app);
 require('./routes/agent_top_up.js')(app);
 
