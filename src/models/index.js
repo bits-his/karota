@@ -1,8 +1,8 @@
 'use strict';
 
-import fs  from 'fs';
-import path  from 'path';
-import Sequelize  from 'sequelize';
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
 require('dotenv').config();
 
 const basename = path.basename(__filename);
@@ -12,7 +12,7 @@ const config = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   host: process.env.DB_HOST,
-  dialect: process.env.DB_DIALECT,
+  dialect: "mysql",
   pool: {
     max: 5,
     min: 0,
@@ -49,4 +49,4 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-export default db;
+module.exports = db;

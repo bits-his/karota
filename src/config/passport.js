@@ -1,15 +1,14 @@
-import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
-import models from '../models'
+const { ExtractJwt } = require('passport-jwt')
+const JwtStrategy = require('passport-jwt').Strategy
+const models = require('../models')
+require('dotenv').config();
 
 const Users = models.User;
 
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = 'secret';
-// opts.issuer = 'accounts.examplesoft.com';
-// opts.audience = 'yoursite.net';
+opts.secretOrKey = process.env.JWT_SECRET_KEY;
 
-// create jwt strategy
 module.exports = passport => {
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {

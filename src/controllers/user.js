@@ -1,28 +1,30 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import passport from 'passport';
-
-import db from '../models';
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { Op } = require('sequelize');
+const db = require('../models');
 const User = db.User;
+require('dotenv').config();
 
 // load input validation
-import validateRegisterForm from '../validation/register';
-import validateLoginForm from '../validation/login';
+const validateRegisterForm = require('../validation/register');
+const validateLoginForm = require('../validation/login');
 
 // create user
-const create = (req, res) => {
+module.exports.create = (req, res) => {
   const { errors, isValid } = validateRegisterForm(req.body);
-  let { 
-    firstname, 
-    lastname, 
-    username, 
-    role,
-    email, 
+  let {
+    name,
+    username,
+    account_type,
+    email,
+    phone,
     password,
+    status,
+    role,
   } = req.body;
 
   // check validation
-  if(!isValid) {
+  if (!isValid) {
     return res.status(400).json(errors);
   }
 
@@ -30,13 +32,15 @@ const create = (req, res) => {
     if (user.length) {
       return res.status(400).json({ email: 'Email already exists!' });
     } else {
-      let newUser = { 
-        firstname, 
-        lastname, 
-        username, 
+      let newUser = {
+        name,
+        username,
+        account_type,
+        email,
+        phone,
+        password,
+        status,
         role,
-        email, 
-        password, 
       };
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -55,61 +59,65 @@ const create = (req, res) => {
   });
 };
 
-const login = (req, res) => {
+module.exports.login = (req, res) => {
   const { errors, isValid } = validateLoginForm(req.body);
 
   // check validation
-  if(!isValid) {
+  if (!isValid) {
     return res.status(400).json(errors);
   }
 
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
-  User.findAll({ 
-    where: { 
-      email 
-    } 
-  })
-  .then(user => {
-
-    //check for user
-    if (!user.length) {
-      errors.email = 'User not found!';
-      return res.status(404).json(errors);
+  User.findAll({
+    where: {
+      [Op.or]: [
+        { email: username },
+        { phone: username }
+      ]
     }
-     
-    let originalPassword = user[0].dataValues.password
+  })
+    .then(user => {
 
-    //check for password
-    bcrypt
-      .compare(password, originalPassword)
-      .then(isMatch => {
-        if (isMatch) {
-          // user matched
-          console.log('matched!')
-          const { id, username } = user[0].dataValues;
-          const payload = { id, username }; //jwt payload
-          // console.log(payload)
+      //check for user
+      if (!user.length) {
+        errors.username = 'User not found!';
+        return res.status(404).json(errors);
+      }
 
-          jwt.sign(payload, 'secret', { 
-            expiresIn: 3600 
-          }, (err, token) => {
-            res.json({
-              success: true,
-              token: 'Bearer ' + token,
-              role: user[0].dataValues.role
+      let originalPassword = user[0].dataValues.password
+
+      //check for password
+      console.log({ password, originalPassword });
+      bcrypt
+        .compare(password, originalPassword)
+        .then(isMatch => {
+          if (isMatch) {
+            // user matched
+            console.log('matched!')
+            const { id, username } = user[0].dataValues;
+            const payload = { id, username }; //jwt payload
+            // console.log(payload)
+
+            jwt.sign(payload, process.env.JWT_SECRET_KEY, {
+              expiresIn: 3600
+            }, (err, token) => {
+              res.json({
+                success: true,
+                token: 'Bearer ' + token,
+                role: user[0].dataValues.role
+              });
             });
-          });
-        } else {
-          errors.password = 'Password not correct';
-          return res.status(400).json(errors);
-        }
-    }).catch(err => console.log(err));
-  }).catch(err => res.status(500).json({err}));
+          } else {
+            errors.password = 'Password not correct';
+            return res.status(400).json(errors);
+          }
+        }).catch(err => console.log(err));
+    }).catch(err => res.status(500).json({ err }));
 };
 
 // fetch all users
-const findAllUsers = (req, res) => {
+module.exports.findAllUsers = (req, res) => {
   User.findAll()
     .then(user => {
       res.json({ user });
@@ -118,13 +126,13 @@ const findAllUsers = (req, res) => {
 };
 
 // fetch user by userId
-const findById = (req, res) => {
+module.exports.findById = (req, res) => {
   const id = req.params.userId;
-  
+
   User.findAll({ where: { id } })
     .then(user => {
-      if(!user.length) {
-        return res.json({ msg: 'user not found'})
+      if (!user.length) {
+        return res.json({ msg: 'user not found' })
       }
       res.json({ user })
     })
@@ -132,7 +140,7 @@ const findById = (req, res) => {
 };
 
 // update a user's info
-const update = (req, res) => {
+module.exports.update = (req, res) => {
   let { firstname, lastname, HospitalId, role, image } = req.body;
   const id = req.params.userId;
 
@@ -149,7 +157,7 @@ const update = (req, res) => {
 };
 
 // delete a user
-const deleteUser = (req, res) => {
+module.exports.deleteUser = (req, res) => {
   const id = req.params.userId;
 
   User.destroy({ where: { id } })
@@ -157,11 +165,50 @@ const deleteUser = (req, res) => {
     .catch(err => res.status(500).json({ msg: 'Failed to delete!' }));
 };
 
-export { 
-    create, 
-    login, 
-    findAllUsers, 
-    findById, 
-    update, 
-    deleteUser 
-}
+
+module.exports.verifyToken = async function (req, res) {
+  const authToken = req.headers["authorization"];
+
+  if (!authToken || !authToken.startsWith("Bearer ")) {
+    return res.status(401).json({
+      success: false,
+      msg: "Invalid or missing token",
+    });
+  }
+
+  const token = authToken.slice(7); // Remove "Bearer " from the token string
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const { id } = decoded;
+
+    const user = await db.User.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: "User not found",
+      });
+    }
+
+    const profile = await db.sequelize.query(
+      `SELECT * FROM ${user.role}s WHERE user_id=${user.id}`
+    );
+
+    res.json({
+      success: true,
+      user,
+      profile: profile[0],
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(401).json({
+      success: false,
+      msg: "Failed to authenticate token",
+    });
+  }
+};

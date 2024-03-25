@@ -1,18 +1,18 @@
-import Validator from 'validator';
-import isEmpty from './isEmpty';
+const Validator = require('validator');
+const isEmpty = require('./isEmpty');
 
 function validateLoginForm(data) {
   let errors = {};
 
-  data.email = !isEmpty(data.email) ? data.email : '';
+  data.username = !isEmpty(data.username) ? data.username : '';
   data.password = !isEmpty(data.password) ? data.password : '';
 
-  if (!Validator.isEmail(data.email)) {
-    errors.email = 'Email is invalid';
+  if (!Validator.isLength(data.username, { min: 3, max: 50 })) {
+    errors.username = 'Username is invalid';
   }
 
-  if (Validator.isEmpty(data.email)) {
-    errors.email = 'Email is required';
+  if (Validator.isEmpty(data.username)) {
+    errors.username = 'Username is required';
   }
 
   if (Validator.isEmpty(data.password)) {
@@ -25,4 +25,4 @@ function validateLoginForm(data) {
   };
 };
 
-export default validateLoginForm
+module.exports = validateLoginForm
