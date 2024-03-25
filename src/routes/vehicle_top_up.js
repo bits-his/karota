@@ -3,7 +3,7 @@ const { createTopUp, fetchTopUp } = require("../controllers/vehicle_top_up");
 module.exports = (app) => {
   // create a new agent
   app.post(
-    '/top-up/create',
+    '/top-up/createssss',
     createTopUp
   );
   // select all top-up-history from the database.
