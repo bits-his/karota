@@ -333,3 +333,11 @@ _nin
     END IF;
 END$$
 DELIMITER ;
+
+
+// new changes for the sum up
+--  ELSEIF _query_type = 'select-all' THEN
+--     SELECT v.*, COALESCE(SUM(vtu.debit + vtu.credit), 0) AS balance
+--     FROM vehicle_registration v
+--     LEFT JOIN vehicle_top_up vtu ON v.vehicle_id = vtu.vehicle_id
+--     GROUP BY v.vehicle_id, v.owner_id, v.lg_reg_no, v.engine_no, v.plate_no, v.color, v.vehicle_make, v.vehicle_model, v.engine_capacity, v.chasis_no, v.date_issued, v.purchased_date, v.state_registered, v.registered_lg, v.expiry_date;
