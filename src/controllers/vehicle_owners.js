@@ -21,7 +21,7 @@ module.exports.saveVehicleOwners = (req, res) => {
             :email,
             :state,
             :lga
-            :user_id,
+            :user_id
             
         )`, {
         replacements: {
