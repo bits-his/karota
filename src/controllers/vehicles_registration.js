@@ -25,10 +25,11 @@ module.exports.registerVehicle = async (req, res) => {
     const resp = await db.sequelize.query(
       `CALL vehicles(
         :query_type,  
-        :owner_id, 
+        :vehicle_id,
+        :owner_id,
+        :plate_no,
         :lg_reg_no,
         :engine_no, 
-        :plate_no,
         :color,
         :vehicle_make,
         :vehicle_model,
