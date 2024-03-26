@@ -22,6 +22,7 @@ module.exports.createVendor = async (req, res) => {
     contact_email = null,
     contact_lga = null,
     vendor_id = null,
+   
   } = req.body;
 
   // if (!contact_password) {
@@ -47,11 +48,12 @@ module.exports.createVendor = async (req, res) => {
         :contact_name, 
         :contact_address, 
         :contact_state, 
-        :contact_password, 
         :contact_phone, 
         :contact_email, 
-        :contact_lga)`,
-        // :vendor_id)`,
+        :contact_lga,
+        :contact_password
+        )`,
+        
       {
         replacements: {
           query_type,
@@ -73,6 +75,7 @@ module.exports.createVendor = async (req, res) => {
           contact_email,
           contact_lga,
           vendor_id
+         
         }
       }
     );
@@ -104,6 +107,7 @@ module.exports.getVendors = async (req, res) => {
     contact_email = null,
     contact_lga = null,
     vendor_id = null,
+    contact_password = null
   } = req.query;
   try {
     const resp = await db.sequelize.query(
@@ -124,8 +128,8 @@ module.exports.getVendors = async (req, res) => {
         :contact_state, 
         :contact_phone, 
         :contact_email, 
-        :contact_lga, 
-        :vendor_id)`,
+        :contact_lga,
+        :contact_password)`,
       {
         replacements: {
           query_type,
@@ -146,6 +150,7 @@ module.exports.getVendors = async (req, res) => {
           contact_email,
           contact_lga,
           vendor_id,
+          contact_password
         }
       }
     );
