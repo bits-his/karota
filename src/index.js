@@ -13,7 +13,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-let port = process.env.PORT || 34567;
+let port = process.env.PORT || 34568;
 
 // make express look in the public directory for assets (css/js/img)
 app.use(express.static(__dirname + "/public"));
@@ -45,11 +45,11 @@ require('./routes/drivers.js')(app);
 require('./routes/super_agents.js')(app);
 require('./routes/agents.js')(app);
 require('./routes/vehicle_owners.js')(app);
-require('./routes/vehicle_top_up.js')(app);
+//require('./routes/vehicle_top_up.js')(app);
 require('./routes/dashboard_queries.js')(app);
 require('./routes/top_up.js')(app);
 require('./routes/transaction_history.js')(app);
-require('./routes/agent_top_up.js')(app);
+//require('./routes/agent_top_up.js')(app);
 
 
 // any routes not specified get sent here
