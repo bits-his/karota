@@ -15,13 +15,13 @@ module.exports.saveVehicleOwners = (req, res) => {
     } = req.body
     db.sequelize.query(`CALL vehicle_owners(
             :query_type,
+            :user_id,
             :name,
             :address,
             :phone,
             :email,
             :state,
             :lga
-            :user_id
             
         )`, {
         replacements: {
