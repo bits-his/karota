@@ -24,10 +24,16 @@ module.exports.registerVehicle = async (req, res) => {
     const resp = await db.sequelize.query(
       `CALL vehicles(
         :query_type,  
-        :owner_id, 
+        :vehicle_id,
+        :owner_id,
+        :plate_no,
         :lg_reg_no,
         :engine_no, 
+<<<<<<< HEAD
         :plate_no,
+=======
+        :color,
+>>>>>>> 082162aa4c3caf71bcb1af9381da84911a85f0a6
         :vehicle_make,
         :vehicle_model,
         :engine_capacity,
@@ -36,7 +42,10 @@ module.exports.registerVehicle = async (req, res) => {
         :state_registered,
         :purchased_date,
         :registered_lg,
+<<<<<<< HEAD
         :color,
+=======
+>>>>>>> 082162aa4c3caf71bcb1af9381da84911a85f0a6
         :expiry_date
       )`,
       {

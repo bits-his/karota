@@ -33,7 +33,11 @@ module.exports.saveVehicleOwners = (req, res) => {
             email,
             state,
             lga
+<<<<<<< HEAD
 
+=======
+           
+>>>>>>> 082162aa4c3caf71bcb1af9381da84911a85f0a6
         }
     })
         .then((resp) => {
