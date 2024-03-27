@@ -17,7 +17,6 @@ module.exports.createVendor = async (req, res) => {
     contact_name = null,
     contact_address = null,
     contact_state = null,
-    contact_password = null,
     contact_phone = null,
     contact_email = null,
     contact_lga = null,
@@ -51,7 +50,7 @@ module.exports.createVendor = async (req, res) => {
         :contact_phone, 
         :contact_email, 
         :contact_lga,
-        :contact_password
+        :vendor_id
         )`,
         
       {
@@ -70,7 +69,7 @@ module.exports.createVendor = async (req, res) => {
           contact_name,
           contact_address,
           contact_state,
-          contact_password:'', // hashedContactPassword,
+          // contact_password:'', // hashedContactPassword,
           contact_phone,
           contact_email,
           contact_lga,

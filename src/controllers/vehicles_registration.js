@@ -4,7 +4,6 @@ const db = require('../models');
 module.exports.registerVehicle = async (req, res) => {
   const {
     query_type = 'insert',
-    vehicle_id = null,
     owner_id = null,
     lg_reg_no = null,
     engine_no = null,
@@ -29,35 +28,33 @@ module.exports.registerVehicle = async (req, res) => {
         :owner_id, 
         :lg_reg_no,
         :engine_no, 
-        :plate_no,
         :color,
         :vehicle_make,
         :vehicle_model,
         :engine_capacity,
         :chasis_no,
         :date_issued,
-        :purchased_date,
         :state_registered,
+        :purchased_date,
         :registered_lg,
         :expiry_date
       )`,
       {
         replacements: {
           query_type,
-          vehicle_id,
           owner_id,
           lg_reg_no,
           engine_no,
           plate_no,
-          color,
           vehicle_make,
           vehicle_model,
           engine_capacity,
           chasis_no,
           date_issued,
-          purchased_date,
           state_registered,
+          purchased_date,
           registered_lg,
+          color,
           expiry_date
         }
       }
