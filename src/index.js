@@ -13,7 +13,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-let port = process.env.PORT || 34568;
+let port = process.env.PORT || 44405;
 
 // make express look in the public directory for assets (css/js/img)
 app.use(express.static(__dirname + "/public"));
