@@ -70,8 +70,6 @@ module.exports.registerVehicle = async (req, res) => {
 // Get all registered vehicles
 module.exports.getRegVehicles = async (req, res) => {
   const {
-    query_type = 'select-all',
-    owner_id = null,
     lg_reg_no = null,
     engine_no = null,
     plate_no = null,
@@ -86,7 +84,7 @@ module.exports.getRegVehicles = async (req, res) => {
     color = null,
     expiry_date = null,
   } = req.body;
-
+const {query_type,owner_id=null} = req.query
   try {
     const resp = await db.sequelize.query(
       `CALL vehicles(
