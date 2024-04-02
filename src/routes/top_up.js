@@ -5,6 +5,10 @@ module.exports = (app) => {
     '/top-up/create',
     createTopUp
   );
+  app.post(
+    '/top-up/history',
+    fetchTopUp
+  );
   app.get('/super_agent/top-up',
     fetchTopUp);
 

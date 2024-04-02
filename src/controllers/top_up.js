@@ -27,7 +27,6 @@ module.exports.createTopUp = async (req, res) => {
           amount,
           date_from,
           date_to,
-
           t_date: moment().format('YYYY-MM-DD')
         }
       }
@@ -43,20 +42,18 @@ module.exports.createTopUp = async (req, res) => {
 
 // Fetch Super Agent Top-Up
 module.exports.fetchTopUp = async (req, res) => {
-  const { id = null, name = null, super_agent = null } = req.query;
+  const { query_type =null, source_id = null } = req.body;
 
   try {
     const resp = await db.sequelize.query(
-      `CALL agents(
-          :id,
-          :name,
-          :super_agent
+      `CALL top_up_history(
+        :query_type, 
+        :source_id
         )`,
       {
         replacements: {
-          id,
-          name,
-          super_agent,
+          query_type, 
+          source_id
         }
       }
     );
