@@ -4,7 +4,7 @@ const moment = require('moment')
 // Create Super Agent Top-Up
 module.exports.createTopUp = async (req, res) => {
   const {query_type =null, source_id = null, destination_id = null,type_of_top_up = null, 
-    amount = 0 , date_from = null, date_to = null} = req.body;
+    amount = null , date_from = null, date_to = null} = req.body;
   console.log(req.body, 'iojdtkgdklg');
   try {
     const resp = await db.sequelize.query(
@@ -33,9 +33,9 @@ module.exports.createTopUp = async (req, res) => {
       }
     );
     //const transactionIdResp = await db.sequelize.query('SELECT @transaction_id AS transaction_id');
-    const transactionId = resp[0].transaction_id;
+    //const transactionId = resp[0].transaction_id;
 
-    res.status(200).json({ success: true, result :transactionId });
+    res.status(200).json({ success: true, result :resp });
     //res.status(200).json({ success: true, results: resp });
   } catch (err) {
     console.error(err);
