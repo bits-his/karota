@@ -28,11 +28,15 @@ module.exports.createTopUp = async (req, res) => {
           date_from,
           date_to,
           t_date: moment().format('YYYY-MM-DD')
+      
         }
       }
     );
+    //const transactionIdResp = await db.sequelize.query('SELECT @transaction_id AS transaction_id');
+    const transactionId = resp[0].transaction_id;
 
-    res.status(200).json({ success: true, results: resp });
+    res.status(200).json({ success: true, result :transactionId });
+    //res.status(200).json({ success: true, results: resp });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, error: 'Failed to create super agent top up' });

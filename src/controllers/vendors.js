@@ -89,7 +89,7 @@ module.exports.createVendor = async (req, res) => {
 module.exports.getVendors = async (req, res) => {
   const {
     query_type = 'select',
-    id = null,
+    id=null,
     vendor_name = null,
     vendor_ofiice_address = null,
     vendor_state = null,
