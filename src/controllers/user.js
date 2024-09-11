@@ -21,6 +21,8 @@ module.exports.create = (req, res) => {
     password,
     status,
     role,
+    accessTo,
+    functionalities,
   } = req.body;
 
   // check validation
@@ -41,6 +43,8 @@ module.exports.create = (req, res) => {
         password,
         status,
         role,
+        accessTo,
+        functionalities,
       };
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -95,19 +99,21 @@ module.exports.login = (req, res) => {
           if (isMatch) {
             // user matched
             console.log('matched!')
-            const { id, username } = user[0].dataValues;
-            const payload = { id, username }; //jwt payload
+            const { id, username, role, accessTo, functionalities } = user[0].dataValues;
+            const payload = { id, username, role, accessTo, functionalities };
             // console.log(payload)
 
             jwt.sign(payload, process.env.JWT_SECRET_KEY, {
               expiresIn: 3600
-            }, (err, token) => {
-              res.json({
-                success: true,
-                token: 'Bearer ' + token,
-                role: user[0].dataValues.role
+            },
+              (err, token) => {
+                if (err) throw err;
+                res.json({
+                  success: true,
+                  token: 'Bearer ' + token,
+                  user: payload,
+                });
               });
-            });
           } else {
             errors.password = 'Password not correct';
             return res.status(400).json(errors);
@@ -186,6 +192,7 @@ module.exports.verifyToken = async function (req, res) {
       where: {
         id,
       },
+      attributes: ['id', 'username', 'role', 'accessTo', 'functionalities']  // Include these fields in the response
     });
 
     if (!user) {
@@ -195,13 +202,14 @@ module.exports.verifyToken = async function (req, res) {
       });
     }
 
+    // Assuming you want to retrieve additional profile data based on the user's role
     const profile = await db.sequelize.query(
       `SELECT * FROM ${user.role}s WHERE user_id=${user.id}`
     );
 
     res.json({
       success: true,
-      user,
+      user,  // This now includes accessTo and functionalities
       profile: profile[0],
     });
   } catch (err) {
@@ -212,3 +220,4 @@ module.exports.verifyToken = async function (req, res) {
     });
   }
 };
+
