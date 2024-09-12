@@ -51,8 +51,8 @@ module.exports.createVendor = async (req, res) => {
         :contact_phone, 
         :contact_email, 
         :contact_lga,
-        :vendor_id
-        )`,
+        :vendor_id,
+        :contact_password)`,
 
       {
         replacements: {
@@ -70,7 +70,7 @@ module.exports.createVendor = async (req, res) => {
           contact_name,
           contact_address,
           contact_state,
-          // contact_password:'', // hashedContactPassword,
+          contact_password:'', // hashedContactPassword,
           contact_phone,
           contact_email,
           contact_lga,
@@ -177,15 +177,15 @@ module.exports.createVendor = async (req, res) => {
 
 exports.createUserAdmin = async (req, res) => {
   try {
-    const { 
-      contact_name, 
-      user_name, 
-      contact_email, 
-      contact_phone, 
-      contact_password, 
-      vendor_id, 
-      accessTo, 
-      functionalities 
+    const {
+      contact_name,
+      user_name,
+      contact_email,
+      contact_phone,
+      contact_password,
+      vendor_id,
+      accessTo,
+      functionalities
     } = req.body;
 
     // Ensure the password is not undefined
@@ -223,24 +223,24 @@ exports.createUserAdmin = async (req, res) => {
 
 exports.getAllUsers = async (req, res, next) => {
   try {
-      // Fetch all users from the database
-      const users = await User.findAll();
-      
-      // Send users as the response
-      res.status(200).json({
-          success: true,
-          results: users
-      });
+    // Fetch all users from the database
+    const users = await User.findAll();
+
+    // Send users as the response
+    res.status(200).json({
+      success: true,
+      results: users
+    });
   } catch (error) {
-      // Pass the error to the next middleware (e.g., error handler)
-      next(error);
+    // Pass the error to the next middleware (e.g., error handler)
+    next(error);
   }
 };
 
 
 module.exports.getVendors = async (req, res) => {
   const {
-    query_type = 'select',
+    query_type = "",
     id = null,
     vendor_name = null,
     vendor_ofiice_address = null,
@@ -280,6 +280,7 @@ module.exports.getVendors = async (req, res) => {
         :contact_phone, 
         :contact_email, 
         :contact_lga,
+        :vendor_id,
         :contact_password)`,
       {
         replacements: {

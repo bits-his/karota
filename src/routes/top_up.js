@@ -1,4 +1,4 @@
-const { createTopUp, fetchTopUp } = require("../controllers/top_up");
+const { createTopUp, fetchTopUp, newTopUp } = require("../controllers/top_up");
 
 module.exports = (app) => {
   app.post(
@@ -14,5 +14,8 @@ module.exports = (app) => {
 
   // select top up history for a user
   app.get('/super_agent/top-up/:id',
-  fetchTopUp)
+  fetchTopUp);
+
+  app.get('/daily_top_up',
+    newTopUp)
 };

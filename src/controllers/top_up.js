@@ -70,3 +70,19 @@ module.exports.fetchTopUp = async (req, res) => {
     res.status(500).json({ success: false, error: 'Failed to fetch vehicle topup' });
   }
 };
+
+module.exports.newTopUp = async (req, res) => {
+  try {
+    const resp = await db.sequelize.query(
+      `CALL daily_top_up()`,
+      {
+        replacements: {}
+      }
+    );
+
+    res.status(200).json({ success: true, results: resp });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: 'Failed to fetch vehicle topup' });
+  }
+};

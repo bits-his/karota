@@ -182,7 +182,7 @@ module.exports.verifyToken = async function (req, res) {
     });
   }
 
-  const token = authToken.slice(7); // Remove "Bearer " from the token string
+  const token = authToken.slice(7);
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
@@ -192,7 +192,7 @@ module.exports.verifyToken = async function (req, res) {
       where: {
         id,
       },
-      attributes: ['id', 'username', 'role', 'accessTo', 'functionalities']  // Include these fields in the response
+      attributes: ['id', 'username', 'role', 'accessTo', 'functionalities']
     });
 
     if (!user) {
