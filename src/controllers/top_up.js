@@ -4,7 +4,7 @@ const moment = require('moment')
 // Create Super Agent Top-Up
 module.exports.createTopUp = async (req, res) => {
   const {query_type =null, source_id = null, destination_id = null,type_of_top_up = null, 
-    amount = null , date_from = null, date_to = null} = req.body;
+    amount = null , date_from = null, date_to = null,balance=null} = req.body;
   console.log(req.body, 'iojdtkgdklg');
   try {
     const resp = await db.sequelize.query(
@@ -16,7 +16,8 @@ module.exports.createTopUp = async (req, res) => {
           :amount,
           :t_date,
           :date_from,
-          :date_to
+          :date_to,
+          :balance
         )`,
       {
         replacements: { 
@@ -27,7 +28,8 @@ module.exports.createTopUp = async (req, res) => {
           amount,
           date_from,
           date_to,
-          t_date: moment().format('YYYY-MM-DD')
+          t_date: moment().format('YYYY-MM-DD'),
+          balance
       
         }
       }
