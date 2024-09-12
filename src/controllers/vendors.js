@@ -70,7 +70,7 @@ module.exports.createVendor = async (req, res) => {
           contact_name,
           contact_address,
           contact_state,
-          // contact_password:'', // hashedContactPassword,
+          contact_password:'', // hashedContactPassword,
           contact_phone,
           contact_email,
           contact_lga,
