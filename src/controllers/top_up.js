@@ -80,7 +80,7 @@ module.exports.newTopUp = async (req, res) => {
       }
     );
 
-    res.status(200).json({ success: true, results: resp });
+    res.status(200).json({ success: true, results: resp, message:"vehicles debitted successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, error: 'Failed to fetch vehicle topup' });
