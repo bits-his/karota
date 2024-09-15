@@ -19,6 +19,8 @@ module.exports.registerVehicle = async (req, res) => {
     registered_lg = null,
     color = null,
     expiry_date = null,
+    status = "",
+    vehicle_id = null,
   } = req.body;
 
   try {
@@ -39,7 +41,9 @@ module.exports.registerVehicle = async (req, res) => {
         :purchased_date,
         :registered_lg,
         :color,
-        :expiry_date
+        :expiry_date,
+        :status,
+        :vehicle_id
       )`,
       {
         replacements: {
@@ -58,7 +62,9 @@ module.exports.registerVehicle = async (req, res) => {
           purchased_date,
           registered_lg,
           color,
-          expiry_date
+          expiry_date,
+          status,
+          vehicle_id
         }
       }
     );
@@ -87,6 +93,7 @@ module.exports.getRegVehicles = async (req, res) => {
     registered_lg = null,
     color = null,
     expiry_date = null,
+    status = "",
   } = req.body;
   console.log(req.body,req.query)
 const {query_type,vehicle_id=null,owner_id=null} = req.query
@@ -108,7 +115,9 @@ const {query_type,vehicle_id=null,owner_id=null} = req.query
         :purchased_date,
         :registered_lg,
         :color,
-        :expiry_date
+        :expiry_date,
+        :status,
+        :vehicle_id
       )`,
       {
         replacements: {
@@ -127,7 +136,9 @@ const {query_type,vehicle_id=null,owner_id=null} = req.query
           purchased_date,
           state_registered,
           registered_lg,
-          expiry_date
+          expiry_date,
+          status,
+          vehicle_id
         }
       }
     );
