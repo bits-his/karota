@@ -81,7 +81,6 @@ module.exports.getRegVehicles = async (req, res) => {
   const {
     lg_reg_no = null,
     engine_no = null,
-    plate_no = null,
     pin=null,
     vehicle_make = null,
     vehicle_model = null,
@@ -96,7 +95,7 @@ module.exports.getRegVehicles = async (req, res) => {
     status = "",
   } = req.body;
   console.log(req.body,req.query)
-const {query_type,vehicle_id=null,owner_id=null} = req.query
+const {query_type,vehicle_id=null,owner_id=null,plate_no=null} = req.query
   try {
     const resp = await db.sequelize.query(
       `CALL vehicles(
