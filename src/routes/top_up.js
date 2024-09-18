@@ -1,4 +1,4 @@
-const { createTopUp, fetchTopUp, newTopUp } = require("../controllers/top_up");
+const { createTopUp, fetchTopUp, newTopUp, fetchBalance } = require("../controllers/top_up");
 
 module.exports = (app) => {
   app.post(
@@ -9,6 +9,11 @@ module.exports = (app) => {
     '/top-up/history',
     fetchTopUp
   );
+  app.get(
+    '/balance',
+    fetchBalance
+
+  )
   app.get('/super_agent/top-up',
     fetchTopUp);
 

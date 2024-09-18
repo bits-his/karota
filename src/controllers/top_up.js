@@ -71,6 +71,31 @@ module.exports.fetchTopUp = async (req, res) => {
   }
 };
 
+// Fetch Super Agent Top-Up
+module.exports.fetchBalance = async (req, res) => {
+  const { query_type =null, source_id = null } = req.query;
+
+  try {
+    const resp = await db.sequelize.query(
+      `CALL top_up_history(
+        :query_type, 
+        :source_id
+        )`,
+      {
+        replacements: {
+          query_type, 
+          source_id
+        }
+      }
+    );
+ console.log(resp);
+    res.status(200).json({ success: true, results: resp });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: 'Failed to fetch vehicle topup' });
+  }
+};
+
 module.exports.newTopUp = async (req, res) => {
   try {
     const resp = await db.sequelize.query(
