@@ -88,6 +88,7 @@ module.exports.login = (req, res) => {
         errors.username = 'User not found!';
         return res.status(404).json(errors);
       }
+      console.log(user[0].dataValues)
 
       let originalPassword = user[0].dataValues.password
 
@@ -99,9 +100,8 @@ module.exports.login = (req, res) => {
           if (isMatch) {
             // user matched
             console.log('matched!')
-            const { id, username, role, accessTo, functionalities } = user[0].dataValues;
-            const payload = { id, username, role, accessTo, functionalities };
-            // console.log(payload)
+            const { id, username, role, accessTo, functionalities,account_id,name,account_type } = user[0].dataValues;
+            const payload = { id, username, role, accessTo, functionalities,account_id,name,account_type };
 
             jwt.sign(payload, process.env.JWT_SECRET_KEY, {
               expiresIn: 3600

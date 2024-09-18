@@ -8,6 +8,7 @@ module.exports.registerVehicle = async (req, res) => {
     lg_reg_no = null,
     engine_no = null,
     plate_no = null,
+    pin=null,
     vehicle_make = null,
     vehicle_model = null,
     engine_capacity = null ,
@@ -18,6 +19,8 @@ module.exports.registerVehicle = async (req, res) => {
     registered_lg = null,
     color = null,
     expiry_date = null,
+    status = "",
+    vehicle_id = null,
   } = req.body;
 
   try {
@@ -30,6 +33,7 @@ module.exports.registerVehicle = async (req, res) => {
         :date_issued,
         :engine_no,
         :plate_no,
+        :pin,
         :vehicle_make,
         :vehicle_model,
         :engine_capacity,
@@ -37,7 +41,9 @@ module.exports.registerVehicle = async (req, res) => {
         :purchased_date,
         :registered_lg,
         :color,
-        :expiry_date
+        :expiry_date,
+        :status,
+        :vehicle_id
       )`,
       {
         replacements: {
@@ -48,6 +54,7 @@ module.exports.registerVehicle = async (req, res) => {
           date_issued,
           engine_no,
           plate_no,
+          pin,
           vehicle_make,
           vehicle_model,
           engine_capacity,
@@ -55,7 +62,9 @@ module.exports.registerVehicle = async (req, res) => {
           purchased_date,
           registered_lg,
           color,
-          expiry_date
+          expiry_date,
+          status,
+          vehicle_id
         }
       }
     );
@@ -72,7 +81,7 @@ module.exports.getRegVehicles = async (req, res) => {
   const {
     lg_reg_no = null,
     engine_no = null,
-    plate_no = null,
+    pin=null,
     vehicle_make = null,
     vehicle_model = null,
     engine_capacity = null ,
@@ -83,9 +92,11 @@ module.exports.getRegVehicles = async (req, res) => {
     registered_lg = null,
     color = null,
     expiry_date = null,
+    status = "",
   } = req.body;
   console.log(req.body,req.query)
-const {query_type,vehicle_id=null,owner_id=null} = req.query
+  //hmm
+const {query_type,vehicle_id=null,owner_id=null,plate_no=null} = req.query
   try {
     const resp = await db.sequelize.query(
       `CALL vehicles(
@@ -94,6 +105,7 @@ const {query_type,vehicle_id=null,owner_id=null} = req.query
         :lg_reg_no,
         :engine_no, 
         :plate_no,
+        :pin,
         :vehicle_make,
         :vehicle_model,
         :engine_capacity,
@@ -103,7 +115,9 @@ const {query_type,vehicle_id=null,owner_id=null} = req.query
         :purchased_date,
         :registered_lg,
         :color,
-        :expiry_date
+        :expiry_date,
+        :status,
+        :vehicle_id
       )`,
       {
         replacements: {
@@ -112,6 +126,7 @@ const {query_type,vehicle_id=null,owner_id=null} = req.query
           lg_reg_no,
           engine_no,
           plate_no,
+          pin,
           color,
           vehicle_make,
           vehicle_model,
@@ -121,7 +136,9 @@ const {query_type,vehicle_id=null,owner_id=null} = req.query
           purchased_date,
           state_registered,
           registered_lg,
-          expiry_date
+          expiry_date,
+          status,
+          vehicle_id
         }
       }
     );
