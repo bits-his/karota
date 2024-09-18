@@ -88,7 +88,6 @@ module.exports.login = (req, res) => {
         errors.username = 'User not found!';
         return res.status(404).json(errors);
       }
-      console.log(user[0].dataValues)
 
       let originalPassword = user[0].dataValues.password
 
