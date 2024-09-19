@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const passport = require("passport");
 const bodyParser = require("body-parser");
@@ -33,24 +34,23 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 //default route
-app.get('/', (req, res) => res.send('Hello my World'));
+app.get("/", (req, res) => res.send("Hello my World"));
 
-require('./routes/user.js')(app);
-require('./routes/create_user.js')(app);
-require('./routes/incedent.js')(app);
-require('./routes/payment.js')(app);
-require('./routes/vendors.js')(app);
-require('./routes/vehicles_registration.js')(app);
-require('./routes/drivers.js')(app);
-require('./routes/super_agents.js')(app);
-require('./routes/agents.js')(app);
-require('./routes/vehicle_owners.js')(app);
-require('./routes/stolen_report.js')(app);
-require('./routes/dashboard_queries.js')(app);
-require('./routes/top_up.js')(app);
-require('./routes/transaction_history.js')(app);
+require("./routes/user.js")(app);
+require("./routes/create_user.js")(app);
+require("./routes/incedent.js")(app);
+require("./routes/payment.js")(app);
+require("./routes/vendors.js")(app);
+require("./routes/vehicles_registration.js")(app);
+require("./routes/drivers.js")(app);
+require("./routes/super_agents.js")(app);
+require("./routes/agents.js")(app);
+require("./routes/vehicle_owners.js")(app);
+require("./routes/stolen_report.js")(app);
+require("./routes/dashboard_queries.js")(app);
+require("./routes/top_up.js")(app);
+require("./routes/transaction_history.js")(app);
 //require('./routes/agent_top_up.js')(app);
-
 
 // any routes not specified get sent here
 app.all("/*", function (req, res) {
