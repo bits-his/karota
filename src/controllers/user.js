@@ -176,6 +176,7 @@ module.exports.verifyToken = async function (req, res) {
 
   if (!authToken || !authToken.startsWith("Bearer ")) {
     return res.status(401).json({
+      
       success: false,
       msg: "Invalid or missing token",
     });
