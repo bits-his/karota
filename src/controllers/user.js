@@ -173,8 +173,10 @@ module.exports.deleteUser = (req, res) => {
 
 module.exports.verifyToken = async function (req, res) {
   const authToken = req.headers["authorization"];
+  console.log(authToken)
 
   if (!authToken || !authToken.startsWith("Bearer ")) {
+      console.log(authToken, 'inside');
     return res.status(401).json({
       
       success: false,
@@ -186,13 +188,14 @@ module.exports.verifyToken = async function (req, res) {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    const { id } = decoded;
+    const { id,account_id} = decoded;
+    console.log(id,account_id)
 
     const user = await db.User.findOne({
       where: {
         id,
       },
-      attributes: ['id', 'username', 'role', 'accessTo', 'functionalities']
+      attributes: ['id', 'username', 'role', 'accessTo', 'functionalities', 'account_id']
     });
 
     if (!user) {
@@ -204,7 +207,7 @@ module.exports.verifyToken = async function (req, res) {
 
     // Assuming you want to retrieve additional profile data based on the user's role
     const profile = await db.sequelize.query(
-      `SELECT * FROM ${user.role}s WHERE user_id=${user.id}`
+      `SELECT * FROM users WHERE account_id='${user.account_id}'`
     );
 
     res.json({
