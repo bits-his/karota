@@ -40,7 +40,7 @@ module.exports.saveVehicleOwners = (req, res) => {
         })
         .catch(err => {
             console.error(err);
-            res.status(500).json({ success: false, error: 'Operation Failed' });
+            res.status(500).json({ success: false, error: err });
         });
 }
 
